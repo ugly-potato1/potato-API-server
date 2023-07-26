@@ -1,3 +1,5 @@
 # git flow 시작하기
+# 프로젝트 시작하기
+시작 전 git과 git bash가 깔려있어야 함!
 
-![image](https://github.com/ugly-potato1/backend/assets/92251131/a5042bdc-af93-4b38-ae50-e8b1fe333ef6)
+1. 원격저장소(깃허브)에 있는 코드 가져오기
