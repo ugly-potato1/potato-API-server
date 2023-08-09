@@ -14,7 +14,7 @@ import potato.potatoAPIserver.common.BaseTimeEntity;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Dlivery extends BaseTimeEntity {
+public class Delivery extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +34,7 @@ public class Dlivery extends BaseTimeEntity {
     private String shipper;
 
     @Builder
-    public Dlivery(Order order, String dliveryStatus, int orderNumber, String shipper) {
+    public Delivery(Order order, String dliveryStatus, int orderNumber, String shipper) {
         this.order = order;
         this.dliveryStatus = dliveryStatus;
         this.orderNumber = orderNumber;
