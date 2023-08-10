@@ -2,13 +2,7 @@ package potato.potatoAPIserver.user.domain;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,7 +22,7 @@ public class User extends BaseTimeEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
-	private int id;
+	private long id;
 	
 	@Column(length = 50, nullable = false)
 	private String email;
@@ -38,29 +32,31 @@ public class User extends BaseTimeEntity {
 	
 	private LocalDate birth;
 	
-	enum Gender { M, F; }
+	@Enumerated(EnumType.STRING)
+    @Column(nullable = false)
 	private Gender gender;
 	
-	enum Join_type { KAKAO, NAVER; }
-	private Join_type join_type;
+	@Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+	private JoinType joinType;
 	
 	@Column(length = 13, nullable = false)
 	private String number;
 	
 	@Column(length = 50, nullable = false)
-	private String nick_name;
+	private String nickName;
 	
 	@OneToOne(mappedBy="user")
 	private Notification notification;
 	
 	@Builder
-	public User(String email, String name, LocalDate birth, Gender gender, Join_type join_type, String number, String nick_name) {
+	public User(String email, String name, LocalDate birth, Gender gender, JoinType joinType, String number, String nickName) {
 		this.email = email;
 		this.name = name;
 		this.birth = birth;
 		this.gender = gender;
-		this.join_type = join_type;
+		this.joinType = joinType;
 		this.number = number;
-		this.nick_name = nick_name;
+		this.nickName = nickName;
 	}
 }
