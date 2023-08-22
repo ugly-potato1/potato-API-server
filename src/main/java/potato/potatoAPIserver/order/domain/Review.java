@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import potato.potatoAPIserver.common.BaseTimeEntity;
+import potato.potatoAPIserver.product.domain.Product;
+import potato.potatoAPIserver.user.domain.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +43,7 @@ public class Review extends BaseTimeEntity {
     private List<ReviewImage> reviewImages = new ArrayList<ReviewImage>();
 
     @Builder
-    public Review(Product product, User user, Sting content, int evaluation) {
+    public Review(Product product, User user, String content, int evaluation) {
         this.product = product;
         this.user = user;
         this.content = content;
