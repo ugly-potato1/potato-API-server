@@ -3,11 +3,15 @@ package potato.potatoAPIserver.user.domain;
 import java.time.LocalDate;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import potato.potatoAPIserver.common.BaseTimeEntity;
+import potato.potatoAPIserver.user.spec.Role;
+
+import javax.print.DocFlavor;
 
 /**
  * @author 김서인
@@ -42,21 +46,28 @@ public class User extends BaseTimeEntity {
 	
 	@Column(length = 13, nullable = false)
 	private String number;
-	
-	@Column(length = 50, nullable = false)
-	private String nickName;
-	
+
+	@Enumerated(EnumType.STRING)
+	private Role role = Role.USER;
+
+	@NotNull
+	private String providerName;
+
+	@NotNull
+	private String providerId;
+
 	@OneToOne(mappedBy="user")
 	private Notification notification;
 	
 	@Builder
-	public User(String email, String name, LocalDate birth, Gender gender, JoinType joinType, String number, String nickName) {
+	public User(String email, String name, LocalDate birth, Gender gender, JoinType joinType, String number, String nickName, String providerName, String providerId) {
 		this.email = email;
 		this.name = name;
 		this.birth = birth;
 		this.gender = gender;
 		this.joinType = joinType;
 		this.number = number;
-		this.nickName = nickName;
+		this.providerName = providerName;
+		this.providerId = providerId;
 	}
 }
