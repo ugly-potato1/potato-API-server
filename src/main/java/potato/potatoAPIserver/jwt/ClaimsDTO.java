@@ -6,7 +6,10 @@ import lombok.Getter;
 import potato.potatoAPIserver.user.domain.User;
 
 import static lombok.AccessLevel.PRIVATE;
-
+/**
+ * @author 정순원
+ * @since 2023-08-022
+ */
 @Getter
 @AllArgsConstructor(access = PRIVATE)
 @Builder
