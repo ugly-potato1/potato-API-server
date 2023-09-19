@@ -6,6 +6,10 @@ import potato.potatoAPIserver.user.domain.User;
 
 import java.util.Optional;
 
+/**
+ * @author: 정순원
+ * @since: 2023-09-06
+ */
 public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByEmail(String memberEmail);

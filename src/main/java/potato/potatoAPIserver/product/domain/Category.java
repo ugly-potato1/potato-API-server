@@ -14,7 +14,6 @@ import potato.potatoAPIserver.common.BaseTimeEntity;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name = "category")
 public class Category extends BaseTimeEntity {
 
     @Id

@@ -1,3 +1,5 @@
+
+
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.1.2'
@@ -6,10 +8,8 @@ plugins {
 
 group = 'potato'
 version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
 
-java {
-	sourceCompatibility = '17'
-}
 
 configurations {
 	compileOnly {
@@ -32,13 +32,47 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 
+	// queryDsl
+	implementation "com.querydsl:querydsl-jpa:5.0.0:jakarta"
+	annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
+	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+
+	//jwt
 	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
 	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
 	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
+
+	//Oauth2
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+	//redis
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+	//Oauth정보 추출을 위한 webclient 추가
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+	// Slack logback
+	implementation 'com.github.maricn:logback-slack-appender:1.6.1'
 
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+// queryDsl
+def generated = 'src/main/generated'
+
+tasks.withType(JavaCompile) {
+	options.getGeneratedSourceOutputDirectory().set(file(generated))
+}
+
+sourceSets {
+	main.java.srcDirs += [generated]
+}
+
+clean {
+	delete file(generated)
 }

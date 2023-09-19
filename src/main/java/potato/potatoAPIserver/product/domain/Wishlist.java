@@ -5,8 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import org.apache.catalina.User;
 import potato.potatoAPIserver.common.BaseTimeEntity;
+import potato.potatoAPIserver.user.domain.User;
 
 /**
  * @author 박건휘

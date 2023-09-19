@@ -6,12 +6,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import potato.potatoAPIserver.common.BaseTimeEntity;
+import potato.potatoAPIserver.user.spec.AddrDefault;
 
 /**
  * @author 김서인
  * @since 2023-08-08
  */
-
 @Getter
 @NoArgsConstructor
 @Entity

@@ -8,7 +8,6 @@ import potato.potatoAPIserver.common.BaseTimeEntity;
 
 /**
  * 외부 API 연결 시 바뀔 가능성 높음
- *
  * @author 정순원
  * @since 2023-08-08
  */
