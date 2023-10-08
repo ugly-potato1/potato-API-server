@@ -40,7 +40,7 @@ public class Review extends BaseTimeEntity {
     private int evaluation;
 
     @OneToMany(mappedBy = "review")
-    private List<ReviewImage> reviewImages = new ArrayList<ReviewImage>();
+    private List<ReviewImage> reviewImages = new ArrayList<>();
 
     @Builder
     public Review(Product product, User user, String content, int evaluation) {

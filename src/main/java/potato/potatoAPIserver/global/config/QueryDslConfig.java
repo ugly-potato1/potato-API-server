@@ -1,4 +1,4 @@
-package com.flint.flint.config;
+package potato.potatoAPIserver.global.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;

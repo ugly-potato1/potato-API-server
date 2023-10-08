@@ -18,7 +18,7 @@ public class Delivery extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "dliver_id")
+    @Column(name = "delivery_id")
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -26,7 +26,7 @@ public class Delivery extends BaseTimeEntity {
     private Order order;
 
     @Column(length = 50, nullable = false)
-    private String dliveryStatus;
+    private String deliveryStatus;
 
     private int orderNumber;
 
@@ -34,9 +34,9 @@ public class Delivery extends BaseTimeEntity {
     private String shipper;
 
     @Builder
-    public Delivery(Order order, String dliveryStatus, int orderNumber, String shipper) {
+    public Delivery(Order order, String deliveryStatus, int orderNumber, String shipper) {
         this.order = order;
-        this.dliveryStatus = dliveryStatus;
+        this.deliveryStatus = deliveryStatus;
         this.orderNumber = orderNumber;
         this.shipper = shipper;
     }
