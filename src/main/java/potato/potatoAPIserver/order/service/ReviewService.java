@@ -12,6 +12,10 @@ import potato.potatoAPIserver.product.domain.Product;
 import potato.potatoAPIserver.user.domain.User;
 import potato.potatoAPIserver.user.repository.UserRepository;
 
+/**
+ * @Author 정순원
+ * @Since 2023-10-12
+ */
 @Service
 @RequiredArgsConstructor
 public class ReviewService {
@@ -38,5 +42,20 @@ public class ReviewService {
 
         return reviewRepository.save(review); //TODO 리뷰이미지 추가 예정
     }
+
+    @Transactional
+    public void removeReview(long userId, long reviewId) {
+        isWriter(userId, reviewId);
+        reviewRepository.deleteById(reviewId);
+    }
+
+    private void isWriter(long userId, long reviewId) {
+        boolean tf = reviewRepository.existsByUserIdAndReviewId(userId, reviewId);
+
+        if (tf == false) {
+            throw new RuntimeException("리뷰 작성자가 아닙니다."); //TODO 예외 코드 정의후 구형
+        }
+    }
+
 
 }
