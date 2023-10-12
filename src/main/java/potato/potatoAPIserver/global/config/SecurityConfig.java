@@ -39,6 +39,7 @@ public class SecurityConfig {
                 //요청에 대한 권한 설정
                 .authorizeHttpRequests((authorizeRequests) -> authorizeRequests
                         .requestMatchers("/api/v1/auth/**").permitAll() //해당 리소스에 대한 모든 요청 허가
+                        .requestMatchers("/products").permitAll()
                         .anyRequest().authenticated())
 
                 .exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint));

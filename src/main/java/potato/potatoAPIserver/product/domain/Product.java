@@ -1,10 +1,10 @@
 package potato.potatoAPIserver.product.domain;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import potato.potatoAPIserver.common.BaseTimeEntity;
 
 /**
@@ -13,7 +13,7 @@ import potato.potatoAPIserver.common.BaseTimeEntity;
  */
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "product")
 public class Product extends BaseTimeEntity {
 
@@ -30,19 +30,19 @@ public class Product extends BaseTimeEntity {
     private String title;
 
     @Column(nullable = false)
-    private int price;
+    private Integer price;
 
     @Column(length = 1000, nullable = false)
     private String description;
 
-    private int hit;
+    private Integer hit;
 
     @Builder
-    public Product(Category category, String title, int price, String description, int hit) {
+    public Product(Category category, String title, Integer price, String description) {
         this.category = category;
         this.title = title;
         this.price = price;
         this.description = description;
-        this.hit = hit;
+        this.hit = 0;
     }
 }

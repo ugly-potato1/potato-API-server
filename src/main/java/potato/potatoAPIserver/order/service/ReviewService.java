@@ -6,9 +6,9 @@ import org.springframework.transaction.annotation.Transactional;
 import potato.potatoAPIserver.order.domain.Review;
 import potato.potatoAPIserver.order.dto.request.ReviewCreateRequest;
 import potato.potatoAPIserver.order.repository.OrderProductRepository;
-import potato.potatoAPIserver.order.repository.ProductRepository;
 import potato.potatoAPIserver.order.repository.ReviewRepository;
 import potato.potatoAPIserver.product.domain.Product;
+import potato.potatoAPIserver.product.repository.ProductRepository;
 import potato.potatoAPIserver.user.domain.User;
 import potato.potatoAPIserver.user.repository.UserRepository;
 
