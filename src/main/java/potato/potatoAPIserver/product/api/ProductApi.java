@@ -14,7 +14,7 @@ import potato.potatoAPIserver.product.service.dto.ProductCreateRequest;
  * @since: 2023-09-21
  */
 @RestController
-@RequestMapping("api/v1/products")
+@RequestMapping("/products")
 @RequiredArgsConstructor
 public class ProductApi {
 
