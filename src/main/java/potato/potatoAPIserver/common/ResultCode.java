@@ -19,18 +19,17 @@ public enum ResultCode {
     NOT_VALIDATION("P200", "json 값이 올바르지 않습니다."),
 
     // P3xx: 인증, 권한에 대한 예외
-    MAIL_AUTHNUMBER_NOT("P300", "인증번호가 틀립니다."),
-    AUTH_USER_NOT("F301", "현재 권한으로 접근 불가능합니다."),
-    JWT_DATE_NOT("F302", "JWT토큰이 만료되었습니다."),
+    AUTH_USER_NOT("P300", "현재 권한으로 접근 불가능합니다."),
+    JWT_DATE_NOT("P301", "JWT토큰이 만료되었습니다."),
 
     // P4xx: 유저 예외
-    USER_NOT_FOUND("F400", "존재하지 않는 유저입니다."),
-    USER_MANY_REQUEST("F401", "사용자의 API요청이 제한됩니다."),
-    USER_UNIVERSITY_CERTIFICATION_NOT_FOUND("F402", "유저의 대학 정보가 없습니다");
+    USER_NOT_FOUND("P400", "존재하지 않는 유저입니다."),
 
     // P5xx 주문예외
+    ORDER_NOT_FOUND("P500", "존재하지 않은 주문입니다."),
 
     // P6xx 상품예외
+    PRODUCT_NOT_FOUND("P600", "존재하지 않은 상품입니다.");
 
     private final String code;
     private final String message;
