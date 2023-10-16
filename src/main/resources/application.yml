@@ -24,6 +24,20 @@ logging:
   config: classpath:logback-spring.xml
 
 jwt:
-  secretkey: MheAhAP2Wx4PPQuiBSzV7iLHFfkyhb4N7zv1t+8r2Ewf1NTT
+  secretkey: ${SECRETKEY}
   accessTokenExpiration: 86400000
   refreshTokenExpiration: 604800000
+
+
+cloud:
+  aws:
+    s3:
+      bucket: uglypotato-bucket
+    credentials:
+      access-key: ${AWS_ACCESSKEY}
+      secret-key: ${AWS_SECRETKEY}
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false
