@@ -4,6 +4,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.1.2'
 	id 'io.spring.dependency-management' version '1.1.2'
+	id 'com.google.osdetector' version "1.7.1"
 }
 
 group = 'potato'
@@ -57,6 +58,10 @@ dependencies {
 	// Slack logback
 	implementation 'com.github.maricn:logback-slack-appender:1.6.1'
 
+	// mac m1 error solve
+	if (osdetector.classifier == "osx-aarch_64") {
+		runtimeOnly("io.netty:netty-resolver-dns-native-macos:4.1.77.Final:${osdetector.classifier}")
+	}
 }
 
 tasks.named('test') {
