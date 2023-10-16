@@ -48,4 +48,19 @@ public class ReviewService {
         return new ReviewResponse(savedReview.getId()); //TODO 리뷰이미지 추가 예정
     }
 
+    @Transactional
+    public void removeReview(long userId, long reviewId) {
+        isWriter(userId, reviewId);
+        reviewRepository.deleteById(reviewId);
+    }
+
+    private void isWriter(long userId, long reviewId) {
+        boolean tf = reviewRepository.existsByUserIdAndReviewId(userId, reviewId);
+
+        if (tf == false) {
+            throw new RuntimeException("리뷰 작성자가 아닙니다."); //TODO 예외 코드 정의후 구형
+        }
+    }
+
+
 }
