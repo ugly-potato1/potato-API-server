@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
 import potato.potatoAPIserver.common.BaseTimeEntity;
 
 /**
@@ -23,7 +22,7 @@ public class Delivery extends BaseTimeEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
-    private Order order;
+    private OrderProduct orderProduct;
 
     @Column(length = 50, nullable = false)
     private String deliveryStatus;
@@ -34,8 +33,8 @@ public class Delivery extends BaseTimeEntity {
     private String shipper;
 
     @Builder
-    public Delivery(Order order, String deliveryStatus, int orderNumber, String shipper) {
-        this.order = order;
+    public Delivery(OrderProduct orderProduct, String deliveryStatus, int orderNumber, String shipper) {
+        this.orderProduct= orderProduct;
         this.deliveryStatus = deliveryStatus;
         this.orderNumber = orderNumber;
         this.shipper = shipper;
