@@ -25,13 +25,13 @@ public class ReviewUpdateApi {
 
 
     @PostMapping
-    public ResponseForm<ReviewResponse> createReview(@AuthenticationPrincipal AuthorityUserDTO userDTO, @RequestBody ReviewCreateRequest Request) {
-        return new ResponseForm<>(reviewService.createReview(Request, userDTO.getId()));
+    public ResponseForm<ReviewResponse> createReview(@AuthenticationPrincipal AuthorityUserDTO userDTO, @RequestBody ReviewCreateRequest request) {
+        return new ResponseForm<>(reviewService.createReview(request, userDTO.getId()));
     }
 
     @DeleteMapping("/{reviewId}")
-    public ResponseEntity removeReview(@AuthenticationPrincipal AuthorityUserDTO userDTO, @PathVariable long reviewId) {
+    public ResponseForm removeReview(@AuthenticationPrincipal AuthorityUserDTO userDTO, @PathVariable long reviewId) {
         reviewService.removeReview(userDTO.getId(), reviewId);
-        return new ResponseEntity<>(HttpStatusCode.valueOf(200)); //TODO 공통 폼
+        return new ResponseForm<>();
     }
 }

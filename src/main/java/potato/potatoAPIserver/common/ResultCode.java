@@ -29,7 +29,11 @@ public enum ResultCode {
     ORDER_NOT_FOUND("P500", "존재하지 않은 주문입니다."),
 
     // P6xx 상품예외
-    PRODUCT_NOT_FOUND("P600", "존재하지 않은 상품입니다.");
+    PRODUCT_NOT_FOUND("P600", "존재하지 않은 상품입니다."),
+
+    // P7xx 리뷰예외
+    REVIEW_NOT_FOUND("P700", "존재하지 않은 리뷰입니다."),
+    REVIEW_NOT_WRITER("P701", "리뷰 작성자가 아닙니다.");
 
     private final String code;
     private final String message;

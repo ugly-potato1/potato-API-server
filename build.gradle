@@ -58,6 +58,9 @@ dependencies {
 	// Slack logback
 	implementation 'com.github.maricn:logback-slack-appender:1.6.1'
 
+	//AWS
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
 	// mac m1 error solve
 	if (osdetector.classifier == "osx-aarch_64") {
 		runtimeOnly("io.netty:netty-resolver-dns-native-macos:4.1.77.Final:${osdetector.classifier}")
