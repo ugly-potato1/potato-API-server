@@ -2,10 +2,7 @@ package potato.potatoAPIserver.order.api;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import potato.potatoAPIserver.common.ResponseForm;
 import potato.potatoAPIserver.order.dto.request.ReviewCreateRequest;
 import potato.potatoAPIserver.order.dto.response.ReviewResponse;
