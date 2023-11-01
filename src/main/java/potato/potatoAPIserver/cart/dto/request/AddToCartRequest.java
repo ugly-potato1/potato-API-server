@@ -1,7 +1,7 @@
 package potato.potatoAPIserver.cart.dto.request;
 
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -15,6 +15,6 @@ import lombok.Getter;
 public class AddToCartRequest {
     @NotNull
     private Long productId;
-    @Min(1)
+    @Positive
     private int quantity;
 }

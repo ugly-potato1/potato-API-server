@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import potato.potatoAPIserver.cart.dto.request.AddToCartRequest;
-import potato.potatoAPIserver.cart.service.CartWriteService;
+import potato.potatoAPIserver.cart.service.CartProductService;
 import potato.potatoAPIserver.common.ResponseForm;
 import potato.potatoAPIserver.security.auth.dto.AuthorityUserDTO;
 
@@ -21,14 +21,14 @@ import potato.potatoAPIserver.security.auth.dto.AuthorityUserDTO;
 @RequestMapping("api/v1/carts")
 public class CartApi {
 
-    private final CartWriteService cartWriteService;
+    private final CartProductService cartProductService;
 
     @PostMapping("/products")
     public ResponseForm<Void> addProductToCart(
             @AuthenticationPrincipal AuthorityUserDTO userDTO,
             @Valid @RequestBody AddToCartRequest request
     ) {
-        cartWriteService.addToCart(userDTO.getId(), request);
+        cartProductService.addToCart(userDTO.getId(), request);
         return new ResponseForm<>();
     }
 }
