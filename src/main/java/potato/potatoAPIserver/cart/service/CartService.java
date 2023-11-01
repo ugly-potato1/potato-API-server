@@ -25,6 +25,7 @@ public class CartService {
     private final CartRepository cartRepository;
     private final UserRepository userRepository;
 
+    @Transactional(readOnly = true)
     public Optional<Cart> getCart(Long userId) {
         return cartRepository.findByUserId(userId);
     }
