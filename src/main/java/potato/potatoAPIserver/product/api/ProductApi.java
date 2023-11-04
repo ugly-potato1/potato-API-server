@@ -1,13 +1,15 @@
 package potato.potatoAPIserver.product.api;
 
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import potato.potatoAPIserver.common.ResponseForm;
 import potato.potatoAPIserver.product.service.ProductService;
-import potato.potatoAPIserver.product.service.dto.ProductCreateRequest;
+import potato.potatoAPIserver.product.dto.ProductCreateRequest;
 
 /**
  * @author: 박건휘
@@ -21,7 +23,8 @@ public class ProductApi {
     private final ProductService productService;
 
     @PostMapping
-    void postProduct(@RequestBody ProductCreateRequest request){
+    public ResponseForm createProduct(@RequestBody @Valid ProductCreateRequest request) {
         productService.createProduct(request);
+        return new ResponseForm<>();
     }
 }
