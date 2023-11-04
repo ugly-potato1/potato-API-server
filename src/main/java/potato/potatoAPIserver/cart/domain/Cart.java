@@ -1,4 +1,4 @@
-package potato.potatoAPIserver.order.domain;
+package potato.potatoAPIserver.cart.domain;
 
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -21,8 +21,7 @@ public class Cart extends BaseTimeEntity {
     private User user;
 
     @Builder
-    public Cart(Long id, User user) {
-        this.id = id;
+    public Cart(User user) {
         this.user = user;
     }
 }
