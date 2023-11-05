@@ -6,16 +6,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import potato.potatoAPIserver.common.CustomException;
 import potato.potatoAPIserver.common.ResultCode;
-import potato.potatoAPIserver.file.FileService;
 import potato.potatoAPIserver.order.domain.Review;
-import potato.potatoAPIserver.order.domain.ReviewImage;
 import potato.potatoAPIserver.order.dto.request.ReviewCreateRequest;
 import potato.potatoAPIserver.order.dto.response.ReviewResponse;
 import potato.potatoAPIserver.order.repository.OrderProductRepository;
-import potato.potatoAPIserver.order.repository.ProductRepository;
-import potato.potatoAPIserver.order.repository.ReviewImageRepository;
 import potato.potatoAPIserver.order.repository.ReviewRepository;
 import potato.potatoAPIserver.product.domain.Product;
+import potato.potatoAPIserver.product.repository.ProductRepository;
 import potato.potatoAPIserver.user.domain.User;
 import potato.potatoAPIserver.user.service.UserService;
 
@@ -31,8 +28,6 @@ public class ReviewService {
     private final ProductRepository productRepository;
     private final ReviewRepository reviewRepository;
     private final OrderProductRepository orderProductRepository;
-    private final FileService fileService;
-    private final ReviewImageRepository reviewImageRepository;
 
     @Transactional
     public ReviewResponse createReview(ReviewCreateRequest request, long userId) {
@@ -50,20 +45,7 @@ public class ReviewService {
                 .build();
         Review savedReview = reviewRepository.save(review);
 
-        //리뷰이미지링크 mysql에 저장
-        String preSignedUrl = createReviewImage(savedReview, request.getFileName());
-        return new ReviewResponse(savedReview.getId(), preSignedUrl);
-    }
-
-    private String createReviewImage(Review review, String fileName) {
-        String preSignedUrl = fileService.getPreSignedUrl(fileName);
-        ReviewImage reviewImage = ReviewImage.builder()
-                .review(review)
-                .link(preSignedUrl)
-                .build();
-        reviewImageRepository.save(reviewImage);
-
-        return preSignedUrl;
+        return new ReviewResponse(savedReview.getId()); //TODO 리뷰이미지 추가 예정
     }
 
     @Transactional
@@ -76,7 +58,7 @@ public class ReviewService {
         boolean tf = reviewRepository.existsByUserIdAndReviewId(userId, reviewId);
 
         if (tf == false) {
-            throw new CustomException(HttpStatus.NOT_FOUND, ResultCode.REVIEW_NOT_WRITER);
+            throw new RuntimeException("리뷰 작성자가 아닙니다."); //TODO 예외 코드 정의후 구형
         }
     }
 
