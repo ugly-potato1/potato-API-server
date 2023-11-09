@@ -53,6 +53,7 @@ public class CartProductService {
         cartProductRepository.save(cartProduct);
     }
 
+    // TODO: 현재 상품의 재고를 확인하는 코드를 만들수 없다
     public void updateQuantity(Long userId, Long cartProductId, int quantityChange) {
         Cart cart = cartService.findCart(userId).orElse(
                 cartService.createCart(userId)
