@@ -40,11 +40,11 @@ class CartServiceTest {
     void testGetCart() {
         // given
         Long userId = 1L;
-        Cart cart = new Cart();
+        Cart cart = Cart.builder().build();
         given(cartRepository.findByUserId(userId)).willReturn(Optional.of(cart));
 
         // when
-        Optional<Cart> result = cartService.getCart(userId);
+        Optional<Cart> result = cartService.findCart(userId);
 
         // then
         assertThat(result).isPresent().contains(cart);
@@ -56,7 +56,7 @@ class CartServiceTest {
         // given
         Long userId = 1L;
         User user = new User();
-        Cart cart = new Cart();
+        Cart cart = Cart.builder().build();
         given(userRepository.findById(userId)).willReturn(Optional.of(user));
         given(cartRepository.save(any(Cart.class))).willReturn(cart);
 
