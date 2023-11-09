@@ -3,10 +3,7 @@ package potato.potatoAPIserver.cart.api;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import potato.potatoAPIserver.cart.dto.request.AddToCartRequest;
 import potato.potatoAPIserver.cart.service.CartProductService;
 import potato.potatoAPIserver.common.ResponseForm;
@@ -31,4 +28,15 @@ public class CartApi {
         cartProductService.addToCart(userDTO.getId(), request);
         return new ResponseForm<>();
     }
+
+    @PatchMapping("/products/{cart-product-id}")
+    public ResponseForm<Void> increaseQuantity(
+            @PathVariable("cart-product-id") Long cartProductId,
+            @AuthenticationPrincipal AuthorityUserDTO userDTO,
+            @RequestBody int quantity
+    ) {
+        cartProductService.updateQuantity(userDTO.getId(), cartProductId, quantity);
+        return new ResponseForm<>();
+    }
+
 }
