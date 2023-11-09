@@ -1,6 +1,7 @@
 package potato.potatoAPIserver.cart.domain;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import potato.potatoAPIserver.product.domain.Product;
 
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CartProduct extends BaseTimeEntity {
 
     @Id
@@ -34,7 +35,13 @@ public class CartProduct extends BaseTimeEntity {
         this.quantity = quantity;
     }
 
-    public void addQuantity(int quantity) {
-        this.quantity += quantity;
+    public boolean updateQuantity(int quantityChange) {
+        int newQuantity = this.quantity + quantityChange;
+        if (newQuantity >= 1) {
+            this.quantity = newQuantity;
+            return true;
+        }
+        return false;
     }
+
 }
