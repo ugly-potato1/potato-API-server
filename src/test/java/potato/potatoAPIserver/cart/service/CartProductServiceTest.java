@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import potato.potatoAPIserver.cart.domain.Cart;
 import potato.potatoAPIserver.cart.domain.CartProduct;
-import potato.potatoAPIserver.cart.dto.request.AddToCartRequest;
+import potato.potatoAPIserver.cart.dto.request.CartProductCreateRequest;
 import potato.potatoAPIserver.cart.repository.CartProductRepository;
 import potato.potatoAPIserver.product.domain.Product;
 import potato.potatoAPIserver.product.repository.ProductRepository;
@@ -48,7 +48,7 @@ class CartProductServiceTest {
         // given
         Long userId = 1L;
         Long productId = 1L;
-        AddToCartRequest request = new AddToCartRequest(productId, 2);
+        CartProductCreateRequest request = new CartProductCreateRequest(productId, 2);
 
         User user = new User();
         Cart cart = Cart.builder().build();
@@ -65,7 +65,7 @@ class CartProductServiceTest {
         given(cartProductRepository.findCartProduct(cart.getId(), product.getId())).willReturn(Optional.of(existingCartProduct));
 
         // when
-        sut.addToCart(userId, request);
+        sut.createCartProduct(userId, request);
 
         // then
         then(cartProductRepository).should().save(existingCartProduct);
@@ -77,7 +77,7 @@ class CartProductServiceTest {
     void testAddToCartNewProduct() {
         // given
         Long userId = 1L;
-        AddToCartRequest request = new AddToCartRequest(1L, 2);
+        CartProductCreateRequest request = new CartProductCreateRequest(1L, 2);
 
         User user = new User();
         Cart cart = Cart.builder().build();
@@ -89,7 +89,7 @@ class CartProductServiceTest {
         given(cartProductRepository.findCartProduct(cart.getId(), product.getId())).willReturn(Optional.empty());
 
         // when
-        sut.addToCart(userId, request);
+        sut.createCartProduct(userId, request);
 
         // then
         then(cartProductRepository).should().save(any(CartProduct.class));

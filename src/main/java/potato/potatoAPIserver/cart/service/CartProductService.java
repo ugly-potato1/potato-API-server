@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import potato.potatoAPIserver.cart.domain.Cart;
 import potato.potatoAPIserver.cart.domain.CartProduct;
-import potato.potatoAPIserver.cart.dto.request.AddToCartRequest;
+import potato.potatoAPIserver.cart.dto.request.CartProductCreateRequest;
 import potato.potatoAPIserver.cart.repository.CartProductRepository;
 import potato.potatoAPIserver.common.CustomException;
 import potato.potatoAPIserver.common.ResultCode;
@@ -27,7 +27,7 @@ public class CartProductService {
     private final CartProductRepository cartProductRepository;
     private final ProductRepository productRepository;
 
-    public void addToCart(Long userId, AddToCartRequest request) {
+    public void createCartProduct(Long userId, CartProductCreateRequest request) {
         Cart cart = cartService.findCart(userId).orElse(
                 cartService.createCart(userId)
         );
