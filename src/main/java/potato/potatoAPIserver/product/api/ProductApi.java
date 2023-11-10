@@ -3,10 +3,7 @@ package potato.potatoAPIserver.product.api;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import potato.potatoAPIserver.common.ResponseForm;
 import potato.potatoAPIserver.product.service.ProductService;
 import potato.potatoAPIserver.product.dto.ProductCreateRequest;
@@ -27,4 +24,17 @@ public class ProductApi {
         productService.createProduct(request);
         return new ResponseForm<>();
     }
+
+    @DeleteMapping("/{productId}")
+    public ResponseForm deleteProduct(@PathVariable Long productId) {
+        productService.deleteProduct(productId);
+        return new ResponseForm<>();
+    }
+
+    @GetMapping("/{productId}")
+    public ResponseForm getProduct(@PathVariable Long productId) {
+        productService.getProduct(productId);
+        return new ResponseForm<>();
+    }
+
 }
