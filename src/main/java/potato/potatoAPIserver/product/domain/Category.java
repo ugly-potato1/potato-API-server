@@ -1,11 +1,11 @@
 package potato.potatoAPIserver.product.domain;
 
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import potato.potatoAPIserver.common.BaseTimeEntity;
+
+import java.util.List;
 
 /**
  * @author 박건휘
@@ -22,14 +22,12 @@ public class Category extends BaseTimeEntity {
     private Long id;
 
     @Column(length = 100, nullable = false)
-    private String division;
+    private String name;
 
-    @Column(length = 100, nullable = false)
-    private String subdivision;
+    @OneToMany(mappedBy = "category")
+    private List<SubCategory> subCategories;
 
-    @Builder
-    public Category(String division, String subdivision) {
-        this.division = division;
-        this.subdivision = subdivision;
+    public void setName(String name) {
+        this.name = name;
     }
 }
