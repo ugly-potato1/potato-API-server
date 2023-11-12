@@ -3,11 +3,9 @@ package potato.potatoAPIserver.cart.api;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import potato.potatoAPIserver.cart.dto.request.AddToCartRequest;
+import org.springframework.web.bind.annotation.*;
+import potato.potatoAPIserver.cart.dto.request.CartProductCreateRequest;
+import potato.potatoAPIserver.cart.dto.request.QuantityUpdateRequest;
 import potato.potatoAPIserver.cart.service.CartProductService;
 import potato.potatoAPIserver.common.ResponseForm;
 import potato.potatoAPIserver.security.auth.dto.AuthorityUserDTO;
@@ -26,9 +24,20 @@ public class CartApi {
     @PostMapping("/products")
     public ResponseForm<Void> addProductToCart(
             @AuthenticationPrincipal AuthorityUserDTO userDTO,
-            @Valid @RequestBody AddToCartRequest request
+            @Valid @RequestBody CartProductCreateRequest request
     ) {
-        cartProductService.addToCart(userDTO.getId(), request);
+        cartProductService.createCartProduct(userDTO.getId(), request);
         return new ResponseForm<>();
     }
+
+    @PatchMapping("/products/{cart-product-id}")
+    public ResponseForm<Void> updateQuantity(
+            @PathVariable("cart-product-id") Long cartProductId,
+            @AuthenticationPrincipal AuthorityUserDTO userDTO,
+            @Valid QuantityUpdateRequest quantityUpdateRequest
+            ) {
+        cartProductService.updateQuantity(userDTO.getId(), cartProductId, quantityUpdateRequest.getQuantity());
+        return new ResponseForm<>();
+    }
+
 }

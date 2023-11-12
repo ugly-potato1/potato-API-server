@@ -33,7 +33,11 @@ public enum ResultCode {
 
     // P7xx 리뷰예외
     REVIEW_NOT_FOUND("P700", "존재하지 않은 리뷰입니다."),
-    REVIEW_NOT_WRITER("P701", "리뷰 작성자가 아닙니다.");
+    REVIEW_NOT_WRITER("P701", "리뷰 작성자가 아닙니다."),
+
+    // P8xx 장바구니 예외
+    CART_PRODUCT_NOT_FOUND("P800", "존재하지 않은 장바구니 상품입니다."),
+    QUANTITY_LESS_THAN_ONE("P801", "수량은 1 이상이어야 합니다.");
 
     private final String code;
     private final String message;

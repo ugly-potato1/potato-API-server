@@ -11,5 +11,4 @@ import lombok.Data;
 @AllArgsConstructor
 public class ReviewResponse {
     private long reviewId;
-    private String presingedURL;
 }

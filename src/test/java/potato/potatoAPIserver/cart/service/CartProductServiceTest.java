@@ -1,6 +1,5 @@
 package potato.potatoAPIserver.cart.service;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,17 +8,18 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import potato.potatoAPIserver.cart.domain.Cart;
 import potato.potatoAPIserver.cart.domain.CartProduct;
-import potato.potatoAPIserver.cart.dto.request.AddToCartRequest;
+import potato.potatoAPIserver.cart.dto.request.CartProductCreateRequest;
 import potato.potatoAPIserver.cart.repository.CartProductRepository;
-import potato.potatoAPIserver.order.repository.ProductRepository;
 import potato.potatoAPIserver.product.domain.Product;
+import potato.potatoAPIserver.product.repository.ProductRepository;
 import potato.potatoAPIserver.user.domain.User;
 
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.then;
+import static org.mockito.BDDMockito.*;
+import static org.mockito.Mockito.times;
 
 /**
  * @Author 허석문
@@ -48,53 +48,80 @@ class CartProductServiceTest {
         // given
         Long userId = 1L;
         Long productId = 1L;
-        AddToCartRequest request = new AddToCartRequest(productId, 2);
+        CartProductCreateRequest request = new CartProductCreateRequest(productId, 2);
 
         User user = new User();
-        Cart cart = new Cart();
-        Product product = new Product();
+        Cart cart = Cart.builder().build();
+        Product product = Product.builder().build();
 
-        // 사용자가 이미 장바구니에 해당 상품을 가지고 있는 상황 모의
         CartProduct existingCartProduct = CartProduct.builder()
                 .cart(cart)
                 .product(product)
-                .quantity(3) // 기존 수량
+                .quantity(3)
                 .build();
 
-        given(cartService.getCart(userId)).willReturn(Optional.of(cart));
+        given(cartService.findCart(userId)).willReturn(Optional.of(cart));
         given(productRepository.findById(productId)).willReturn(Optional.of(product));
-        given(cartProductRepository.findCart(cart.getId(), product.getId())).willReturn(Optional.of(existingCartProduct));
+        given(cartProductRepository.findCartProduct(cart.getId(), product.getId())).willReturn(Optional.of(existingCartProduct));
 
         // when
-        sut.addToCart(userId, request);
+        sut.createCartProduct(userId, request);
 
         // then
         then(cartProductRepository).should().save(existingCartProduct);
-        Assertions.assertThat(existingCartProduct.getQuantity()).isEqualTo(5); // 수량확인
+        assertThat(existingCartProduct.getQuantity()).isEqualTo(5); // 수량확인
     }
 
-    @DisplayName("상품이 장바구니에 없어서 추가")
+    @DisplayName("상품이 장바구니에 없을때 추가")
     @Test
     void testAddToCartNewProduct() {
         // given
         Long userId = 1L;
-        AddToCartRequest request = new AddToCartRequest(1L, 2);
+        CartProductCreateRequest request = new CartProductCreateRequest(1L, 2);
 
         User user = new User();
-        Cart cart = new Cart();
-        Product product = new Product();
+        Cart cart = Cart.builder().build();
+        Product product = Product.builder().build();
 
         // 사용자의 장바구니에 해당 상품이 없는 상황 모의
-        given(cartService.getCart(userId)).willReturn(Optional.of(cart));
+        given(cartService.findCart(userId)).willReturn(Optional.of(cart));
         given(productRepository.findById(request.getProductId())).willReturn(Optional.of(product));
-        given(cartProductRepository.findCart(cart.getId(), product.getId())).willReturn(Optional.empty());
+        given(cartProductRepository.findCartProduct(cart.getId(), product.getId())).willReturn(Optional.empty());
 
         // when
-        sut.addToCart(userId, request);
+        sut.createCartProduct(userId, request);
 
         // then
         then(cartProductRepository).should().save(any(CartProduct.class));
     }
 
+    @DisplayName("장바구니 상품을 업데이트 한다.")
+    @Test
+    void testUpdateQuantity() {
+        // given
+        Long userId = 1L;
+        Long cartProductId = 2L;
+        int updateQuantity = 5;
+
+        Cart cart = Cart.builder().build();
+        Product product = Product.builder().build();
+
+        CartProduct cartProduct = CartProduct.builder()
+                .cart(cart)
+                .product(product)
+                .quantity(3)
+                .build();
+
+
+        given(cartService.findCart(userId)).willReturn(Optional.of(cart));
+        given(cartProductRepository.findById(cartProductId)).willReturn(Optional.of(cartProduct));
+
+        // when
+        sut.updateQuantity(userId, cartProductId, updateQuantity);
+
+        // then
+        then(cartProductRepository).should(times(1)).save(any(CartProduct.class));
+        assertThat(cartProduct.getQuantity()).isEqualTo(3 + updateQuantity);
+    }
 
 }
