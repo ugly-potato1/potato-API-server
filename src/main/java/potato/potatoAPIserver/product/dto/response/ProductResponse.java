@@ -1,5 +1,6 @@
 package potato.potatoAPIserver.product.dto.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -9,12 +10,14 @@ import lombok.Getter;
  */
 @Builder
 @Getter
+@AllArgsConstructor
 public class ProductResponse {
     private String title;
     private Integer price;
     private String description;
 
     public static ProductResponse of(String title, Integer price, String description) {
+
         return ProductResponse.builder()
                 .title(title)
                 .price(price)

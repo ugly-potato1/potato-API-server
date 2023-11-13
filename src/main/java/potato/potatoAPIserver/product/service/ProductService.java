@@ -33,6 +33,17 @@ public class ProductService {
     }
 
 
-    public void getProduct(ProductResponse response) {
+    public ProductResponse getProduct(Long productId) {
+        final Product product = findProductByProductId(productId);
+        return ProductResponse.builder()
+                .title(product.getTitle())
+                .price(product.getPrice())
+                .description(product.getDescription())
+                .build();
+    }
+
+    public Product findProductByProductId(Long productId){
+        return productRepository.findById(productId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 상품이 존재하지 않습니다."));
     }
 }

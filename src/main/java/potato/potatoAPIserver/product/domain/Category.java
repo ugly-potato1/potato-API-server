@@ -24,7 +24,7 @@ public class Category extends BaseTimeEntity {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "parent_id")
     private Category parent;
 
     @Builder

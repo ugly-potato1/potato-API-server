@@ -21,21 +21,20 @@ public class ProductApi {
     private final ProductService productService;
 
     @PostMapping
-    public ResponseForm createProduct(@RequestBody @Valid ProductCreateRequest request) {
+    public ResponseForm<?> createProduct(@RequestBody @Valid ProductCreateRequest request) {
         productService.createProduct(request);
         return new ResponseForm<>();
     }
 
     @DeleteMapping("/{productId}")
-    public ResponseForm deleteProduct(@PathVariable Long productId) {
+    public ResponseForm<?> deleteProduct(@PathVariable Long productId) {
         productService.deleteProduct(productId);
         return new ResponseForm<>();
     }
 
     @GetMapping("/{productId}")
-    public ResponseForm getProduct(@RequestBody @Valid ProductResponse response) {
-        productService.getProduct(response);
-        return new ResponseForm<>();
+    public ResponseForm<ProductResponse> getProduct(@PathVariable Long productId) {
+        return new ResponseForm<>(productService.getProduct(productId));
     }
 
 }
