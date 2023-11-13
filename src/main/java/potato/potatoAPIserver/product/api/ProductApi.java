@@ -5,8 +5,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import potato.potatoAPIserver.common.ResponseForm;
+import potato.potatoAPIserver.product.dto.request.ProductCreateRequest;
+import potato.potatoAPIserver.product.dto.response.ProductResponse;
 import potato.potatoAPIserver.product.service.ProductService;
-import potato.potatoAPIserver.product.dto.ProductCreateRequest;
 
 /**
  * @author: 박건휘
@@ -32,8 +33,8 @@ public class ProductApi {
     }
 
     @GetMapping("/{productId}")
-    public ResponseForm getProduct(@PathVariable Long productId) {
-        productService.getProduct(productId);
+    public ResponseForm getProduct(@RequestBody @Valid ProductResponse response) {
+        productService.getProduct(response);
         return new ResponseForm<>();
     }
 

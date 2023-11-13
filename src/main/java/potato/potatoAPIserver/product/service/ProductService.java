@@ -4,8 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import potato.potatoAPIserver.product.domain.Product;
+import potato.potatoAPIserver.product.dto.request.ProductCreateRequest;
+import potato.potatoAPIserver.product.dto.response.ProductResponse;
 import potato.potatoAPIserver.product.repository.ProductRepository;
-import potato.potatoAPIserver.product.dto.ProductCreateRequest;
 
 /**
  * @author: 박건휘
@@ -31,7 +32,7 @@ public class ProductService {
         productRepository.deleteById(productId);
     }
 
-    public void getProduct(Long productId) {
-        productRepository.findById(productId);
+
+    public void getProduct(ProductResponse response) {
     }
 }

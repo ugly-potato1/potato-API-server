@@ -1,4 +1,4 @@
-package potato.potatoAPIserver.product.dto;
+package potato.potatoAPIserver.product.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -7,7 +7,7 @@ import lombok.Getter;
 
 /**
  * @author: 박건휘
- * @since: 2023-10-08
+ * @since: 2023-11-13
  */
 @Getter
 @AllArgsConstructor
