@@ -40,4 +40,13 @@ public class CartApi {
         return new ResponseForm<>();
     }
 
+    @DeleteMapping("/products/{cart-product-id}")
+    public ResponseForm<Void> deleteCartProduct(
+            @PathVariable("cart-product-id") Long cartProductId,
+            @AuthenticationPrincipal AuthorityUserDTO userDTO
+    ) {
+        cartProductService.deleteCartProduct(cartProductId, userDTO.getId());
+        return new ResponseForm<>();
+    }
+
 }
