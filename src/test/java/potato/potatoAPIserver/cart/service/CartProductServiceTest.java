@@ -102,7 +102,6 @@ class CartProductServiceTest {
         Long userId = 1L;
         Long cartProductId = 2L;
         int updateQuantity = 5;
-
         Cart cart = Cart.builder().build();
         Product product = Product.builder().build();
 
@@ -122,6 +121,32 @@ class CartProductServiceTest {
         // then
         then(cartProductRepository).should(times(1)).save(any(CartProduct.class));
         assertThat(cartProduct.getQuantity()).isEqualTo(3 + updateQuantity);
+    }
+
+    @DisplayName("장바구니 상품을 삭제한다")
+    @Test
+    void testDeleteCartProduct() {
+        // 가상의 사용자 ID와 카트 상품 ID를 설정
+        Long userId = 1L;
+        Long cartProductId = 123L;
+
+        // 가상의 Cart 객체 생성
+        Cart cart = Cart.builder().build();
+
+        // 가상의 CartProduct 객체 생성
+        CartProduct cartProduct = CartProduct.builder()
+                .cart(cart)
+                .build();
+
+        // given: Mockito를 사용하여 Mock 객체에 대한 행동 설정
+        given(cartService.findCart(userId)).willReturn(Optional.of(cart));
+        given(cartProductRepository.findById(cartProductId)).willReturn(Optional.of(cartProduct));
+
+        // when: 테스트 대상 메서드 호출
+        sut.deleteCartProduct(userId, cartProductId);
+
+        // then: Mockito를 사용하여 delete 메서드가 호출되었는지 확인
+        then(cartProductRepository).should(times(1)).delete(cartProduct);
     }
 
 }
