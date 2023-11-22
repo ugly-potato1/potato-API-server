@@ -1,4 +1,4 @@
-package potato.potatoAPIserver.security.auth.jwt;
+package potato.potatoAPIserver.security.jwt;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

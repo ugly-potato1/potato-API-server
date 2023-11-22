@@ -9,9 +9,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import potato.potatoAPIserver.security.auth.jwt.JwtAuthenticationEntryPoint;
-import potato.potatoAPIserver.security.auth.jwt.JwtAuthenticationFilter;
-import potato.potatoAPIserver.security.auth.jwt.JwtService;
+import potato.potatoAPIserver.security.jwt.JwtAuthenticationEntryPoint;
+import potato.potatoAPIserver.security.jwt.JwtAuthenticationFilter;
+import potato.potatoAPIserver.security.jwt.JwtService;
 
 
 /**
