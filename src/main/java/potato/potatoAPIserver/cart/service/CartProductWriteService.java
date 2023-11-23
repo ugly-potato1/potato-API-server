@@ -21,15 +21,16 @@ import potato.potatoAPIserver.product.repository.ProductRepository;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class CartProductService {
+public class CartProductWriteService {
 
-    private final CartService cartService;
+    private final CartReadService cartReadService;
+    private final CartWriteService cartWriteService;
     private final CartProductRepository cartProductRepository;
     private final ProductRepository productRepository;
 
     public void createCartProduct(Long userId, CartProductCreateRequest request) {
-        Cart cart = cartService.findCart(userId).orElse(
-                cartService.createCart(userId)
+        Cart cart = cartReadService.findCart(userId).orElse(
+                cartWriteService.createCart(userId)
         );
 
         Product product = productRepository.findById(request.getProductId())
@@ -55,8 +56,8 @@ public class CartProductService {
 
     // TODO: 현재 상품의 재고를 확인하는 코드를 만들수 없다
     public void updateQuantity(Long userId, Long cartProductId, int quantityChange) {
-        Cart cart = cartService.findCart(userId).orElse(
-                cartService.createCart(userId)
+        Cart cart = cartReadService.findCart(userId).orElse(
+                cartWriteService.createCart(userId)
         );
 
         CartProduct cartProduct = cartProductRepository.findById(cartProductId)
@@ -74,8 +75,8 @@ public class CartProductService {
     }
 
     public void deleteCartProduct(Long userId, Long cartProductId) {
-        Cart cart = cartService.findCart(userId).orElse(
-                cartService.createCart(userId)
+        Cart cart = cartReadService.findCart(userId).orElse(
+                cartWriteService.createCart(userId)
         );
 
         CartProduct cartProduct = cartProductRepository.findById(cartProductId)
