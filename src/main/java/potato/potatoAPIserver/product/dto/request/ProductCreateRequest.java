@@ -1,4 +1,4 @@
-package potato.potatoAPIserver.product.dto;
+package potato.potatoAPIserver.product.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
