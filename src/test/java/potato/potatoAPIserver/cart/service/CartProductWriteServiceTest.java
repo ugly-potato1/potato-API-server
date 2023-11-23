@@ -27,13 +27,13 @@ import static org.mockito.Mockito.times;
  */
 
 @ExtendWith(MockitoExtension.class)
-class CartProductServiceTest {
+class CartProductWriteServiceTest {
 
     @InjectMocks
-    CartProductService sut;
+    CartProductWriteService sut;
 
     @Mock
-    CartService cartService;
+    CartWriteService cartWriteService;
 
     @Mock
     CartProductRepository cartProductRepository;
@@ -60,7 +60,7 @@ class CartProductServiceTest {
                 .quantity(3)
                 .build();
 
-        given(cartService.findCart(userId)).willReturn(Optional.of(cart));
+        given(cartWriteService.findCart(userId)).willReturn(Optional.of(cart));
         given(productRepository.findById(productId)).willReturn(Optional.of(product));
         given(cartProductRepository.findCartProduct(cart.getId(), product.getId())).willReturn(Optional.of(existingCartProduct));
 
@@ -84,7 +84,7 @@ class CartProductServiceTest {
         Product product = Product.builder().build();
 
         // 사용자의 장바구니에 해당 상품이 없는 상황 모의
-        given(cartService.findCart(userId)).willReturn(Optional.of(cart));
+        given(cartWriteService.findCart(userId)).willReturn(Optional.of(cart));
         given(productRepository.findById(request.getProductId())).willReturn(Optional.of(product));
         given(cartProductRepository.findCartProduct(cart.getId(), product.getId())).willReturn(Optional.empty());
 
@@ -112,7 +112,7 @@ class CartProductServiceTest {
                 .build();
 
 
-        given(cartService.findCart(userId)).willReturn(Optional.of(cart));
+        given(cartWriteService.findCart(userId)).willReturn(Optional.of(cart));
         given(cartProductRepository.findById(cartProductId)).willReturn(Optional.of(cartProduct));
 
         // when
@@ -139,7 +139,7 @@ class CartProductServiceTest {
                 .build();
 
         // given: Mockito를 사용하여 Mock 객체에 대한 행동 설정
-        given(cartService.findCart(userId)).willReturn(Optional.of(cart));
+        given(cartWriteService.findCart(userId)).willReturn(Optional.of(cart));
         given(cartProductRepository.findById(cartProductId)).willReturn(Optional.of(cartProduct));
 
         // when: 테스트 대상 메서드 호출
