@@ -6,7 +6,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import potato.potatoAPIserver.cart.dto.request.CartProductCreateRequest;
 import potato.potatoAPIserver.cart.dto.request.QuantityUpdateRequest;
-import potato.potatoAPIserver.cart.service.CartProductService;
+import potato.potatoAPIserver.cart.dto.response.CartResponse;
+import potato.potatoAPIserver.cart.service.CartProductWriteService;
+import potato.potatoAPIserver.cart.service.CartReadService;
 import potato.potatoAPIserver.common.ResponseForm;
 import potato.potatoAPIserver.security.auth.dto.AuthorityUserDTO;
 
@@ -19,14 +21,21 @@ import potato.potatoAPIserver.security.auth.dto.AuthorityUserDTO;
 @RequestMapping("api/v1/carts")
 public class CartApi {
 
-    private final CartProductService cartProductService;
+    private final CartReadService cartReadService;
+    private final CartProductWriteService cartProductWriteService;
+
+    @GetMapping
+    public ResponseForm<CartResponse> findCartInfo(@AuthenticationPrincipal AuthorityUserDTO userDTO) {
+        return new ResponseForm<>(cartReadService.findCartInfo(userDTO.getId()));
+    }
+
 
     @PostMapping("/products")
     public ResponseForm<Void> addProductToCart(
             @AuthenticationPrincipal AuthorityUserDTO userDTO,
             @Valid @RequestBody CartProductCreateRequest request
     ) {
-        cartProductService.createCartProduct(userDTO.getId(), request);
+        cartProductWriteService.createCartProduct(userDTO.getId(), request);
         return new ResponseForm<>();
     }
 
@@ -35,8 +44,8 @@ public class CartApi {
             @PathVariable("cart-product-id") Long cartProductId,
             @AuthenticationPrincipal AuthorityUserDTO userDTO,
             @Valid QuantityUpdateRequest quantityUpdateRequest
-            ) {
-        cartProductService.updateQuantity(userDTO.getId(), cartProductId, quantityUpdateRequest.getQuantity());
+    ) {
+        cartProductWriteService.updateQuantity(userDTO.getId(), cartProductId, quantityUpdateRequest.getQuantity());
         return new ResponseForm<>();
     }
 
@@ -45,7 +54,7 @@ public class CartApi {
             @PathVariable("cart-product-id") Long cartProductId,
             @AuthenticationPrincipal AuthorityUserDTO userDTO
     ) {
-        cartProductService.deleteCartProduct(cartProductId, userDTO.getId());
+        cartProductWriteService.deleteCartProduct(cartProductId, userDTO.getId());
         return new ResponseForm<>();
     }
 

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import potato.potatoAPIserver.common.ResponseForm;
 import potato.potatoAPIserver.product.service.ProductService;
-import potato.potatoAPIserver.product.dto.ProductCreateRequest;
+import potato.potatoAPIserver.product.dto.request.ProductCreateRequest;
 
 /**
  * @author: 박건휘

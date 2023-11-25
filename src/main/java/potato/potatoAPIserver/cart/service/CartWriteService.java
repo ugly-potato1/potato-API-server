@@ -11,8 +11,6 @@ import potato.potatoAPIserver.common.ResultCode;
 import potato.potatoAPIserver.user.domain.User;
 import potato.potatoAPIserver.user.repository.UserRepository;
 
-import java.util.Optional;
-
 /**
  * @Author 허석문
  * @Since 2023-10-23
@@ -20,15 +18,10 @@ import java.util.Optional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class CartService {
+public class CartWriteService {
 
     private final CartRepository cartRepository;
     private final UserRepository userRepository;
-
-    @Transactional(readOnly = true)
-    public Optional<Cart> findCart(Long userId) {
-        return cartRepository.findByUserId(userId);
-    }
 
     public Cart createCart(Long userId) {
         User user = userRepository.findById(userId)

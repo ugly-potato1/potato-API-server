@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import potato.potatoAPIserver.product.domain.Product;
 import potato.potatoAPIserver.product.repository.ProductRepository;
-import potato.potatoAPIserver.product.dto.ProductCreateRequest;
+import potato.potatoAPIserver.product.dto.request.ProductCreateRequest;
 
 /**
  * @author: 박건휘
