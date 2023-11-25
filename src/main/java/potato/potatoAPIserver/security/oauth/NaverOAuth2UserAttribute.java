@@ -1,4 +1,4 @@
-package potato.potatoAPIserver.security.oauth.dto;
+package potato.potatoAPIserver.security.oauth;
 
 
 import lombok.Data;
@@ -41,7 +41,7 @@ public class NaverOAuth2UserAttribute extends OAuth2UserAttribute {
 
     @Override
     public String getProviderId() {
-        return response.get("id").toString();
+        return NAVER_PROVIDER_ID+ response.get("id").toString();
     }
 
     @Override
@@ -65,13 +65,13 @@ public class NaverOAuth2UserAttribute extends OAuth2UserAttribute {
     }
 
     @Override
-    public void UserAttributesByOAuthToken(OAuth2AccessToken oauth2AccessToken) {
+    public void setUserAttributesByOauthToken(String oauth2AccessToken) {
 
 
         JSONObject response = WebClient.create()
                 .get()
                 .uri("https://openapi.naver.com/v1/nid/me")
-                .headers(httpHeaders -> httpHeaders.setBearerAuth(oauth2AccessToken.getAccessToken()))
+                .headers(httpHeaders -> httpHeaders.setBearerAuth(oauth2AccessToken))
                 .retrieve()
                 .bodyToMono(JSONObject.class)
                 .block();

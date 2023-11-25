@@ -1,4 +1,4 @@
-package potato.potatoAPIserver.security.oauth.dto;
+package potato.potatoAPIserver.security.oauth;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,6 +31,6 @@ public abstract class OAuth2UserAttribute {
 
     public abstract User toEntity();
 
-    public abstract void UserAttributesByOAuthToken(OAuth2AccessToken OAuth2AccessToken);
+    public abstract void setUserAttributesByOauthToken(String oauth2AccessToken);
 
 }

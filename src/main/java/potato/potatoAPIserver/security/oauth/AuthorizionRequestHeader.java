@@ -1,4 +1,4 @@
-package potato.potatoAPIserver.security.oauth.dto;
+package potato.potatoAPIserver.security.oauth;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +12,7 @@ import lombok.Getter;
 @Getter
 @Data
 @AllArgsConstructor
-public class OAuth2AccessToken {
+public class AuthorizionRequestHeader {
 
     private String accessToken;
 
