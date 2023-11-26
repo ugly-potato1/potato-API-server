@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import potato.potatoAPIserver.common.BaseTimeEntity;
 
+import java.math.BigDecimal;
+
 /**
  * @author 박건휘
  * @since 2023-08-09
@@ -30,7 +32,7 @@ public class Product extends BaseTimeEntity {
     private String title;
 
     @Column(nullable = false)
-    private Integer price;
+    private BigDecimal price;
 
     @Column(length = 1000, nullable = false)
     private String description;
@@ -38,7 +40,7 @@ public class Product extends BaseTimeEntity {
     private Integer hit;
 
     @Builder
-    public Product(Category category, String title, Integer price, String description) {
+    public Product(Category category, String title, BigDecimal price, String description) {
         this.category = category;
         this.title = title;
         this.price = price;
