@@ -36,13 +36,23 @@ public class Product extends BaseTimeEntity {
     private String description;
 
     private Integer hit;
+    private Integer stock;
+
+    @Version
+    private Integer version;
 
     @Builder
-    public Product(Category category, String title, Integer price, String description) {
+    public Product(Category category, String title, Integer price, String description, Integer stock) {
         this.category = category;
         this.title = title;
         this.price = price;
         this.description = description;
+        this.stock = stock;
+        this.version=0;
         this.hit = 0;
+    }
+
+    public void addHit(){
+        this.hit++;
     }
 }

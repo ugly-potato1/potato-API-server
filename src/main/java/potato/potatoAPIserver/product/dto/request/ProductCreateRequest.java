@@ -18,4 +18,7 @@ public class ProductCreateRequest {
     private Integer price;
     @NotBlank
     private String description;
+
+    @NotNull
+    private Integer stock;
 }
