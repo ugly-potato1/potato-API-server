@@ -3,12 +3,12 @@ package potato.potatoAPIserver.cart.api;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import potato.potatoAPIserver.cart.dto.request.AddToCartRequest;
-import potato.potatoAPIserver.cart.service.CartProductService;
+import org.springframework.web.bind.annotation.*;
+import potato.potatoAPIserver.cart.dto.request.CartProductCreateRequest;
+import potato.potatoAPIserver.cart.dto.request.QuantityUpdateRequest;
+import potato.potatoAPIserver.cart.dto.response.CartResponse;
+import potato.potatoAPIserver.cart.service.CartProductWriteService;
+import potato.potatoAPIserver.cart.service.CartReadService;
 import potato.potatoAPIserver.common.ResponseForm;
 import potato.potatoAPIserver.security.auth.dto.AuthorityUserDTO;
 
@@ -21,14 +21,41 @@ import potato.potatoAPIserver.security.auth.dto.AuthorityUserDTO;
 @RequestMapping("api/v1/carts")
 public class CartApi {
 
-    private final CartProductService cartProductService;
+    private final CartReadService cartReadService;
+    private final CartProductWriteService cartProductWriteService;
+
+    @GetMapping
+    public ResponseForm<CartResponse> findCartInfo(@AuthenticationPrincipal AuthorityUserDTO userDTO) {
+        return new ResponseForm<>(cartReadService.findCartInfo(userDTO.getId()));
+    }
+
 
     @PostMapping("/products")
     public ResponseForm<Void> addProductToCart(
             @AuthenticationPrincipal AuthorityUserDTO userDTO,
-            @Valid @RequestBody AddToCartRequest request
+            @Valid @RequestBody CartProductCreateRequest request
     ) {
-        cartProductService.addToCart(userDTO.getId(), request);
+        cartProductWriteService.createCartProduct(userDTO.getId(), request);
         return new ResponseForm<>();
     }
+
+    @PatchMapping("/products/{cart-product-id}")
+    public ResponseForm<Void> updateQuantity(
+            @PathVariable("cart-product-id") Long cartProductId,
+            @AuthenticationPrincipal AuthorityUserDTO userDTO,
+            @Valid QuantityUpdateRequest quantityUpdateRequest
+    ) {
+        cartProductWriteService.updateQuantity(userDTO.getId(), cartProductId, quantityUpdateRequest.getQuantity());
+        return new ResponseForm<>();
+    }
+
+    @DeleteMapping("/products/{cart-product-id}")
+    public ResponseForm<Void> deleteCartProduct(
+            @PathVariable("cart-product-id") Long cartProductId,
+            @AuthenticationPrincipal AuthorityUserDTO userDTO
+    ) {
+        cartProductWriteService.deleteCartProduct(cartProductId, userDTO.getId());
+        return new ResponseForm<>();
+    }
+
 }

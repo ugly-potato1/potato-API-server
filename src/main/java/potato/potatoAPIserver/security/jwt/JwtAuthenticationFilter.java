@@ -1,4 +1,4 @@
-package potato.potatoAPIserver.security.auth.jwt;
+package potato.potatoAPIserver.security.jwt;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

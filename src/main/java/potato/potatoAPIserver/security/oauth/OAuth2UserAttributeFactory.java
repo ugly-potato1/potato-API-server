@@ -1,8 +1,6 @@
-package potato.potatoAPIserver.security.oauth.dto;
+package potato.potatoAPIserver.security.oauth;
 
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
-
-import java.util.Map;
 
 /**
  * OAuth2 구별

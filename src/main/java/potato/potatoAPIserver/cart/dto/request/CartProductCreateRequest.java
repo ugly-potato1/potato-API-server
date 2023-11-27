@@ -12,7 +12,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public class AddToCartRequest {
+public class CartProductCreateRequest {
     @NotNull
     private Long productId;
     @Positive

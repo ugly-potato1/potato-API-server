@@ -1,4 +1,4 @@
-package potato.potatoAPIserver.security.oauth.dto;
+package potato.potatoAPIserver.security.oauth;
 
 
 import lombok.Data;
@@ -42,7 +42,7 @@ public class KakaoOAuth2UserAttribute extends OAuth2UserAttribute {
 
     //TODO
     @Override
-    public String getProviderId() { return this.id;}
+    public String getProviderId() { return KAKAO_PROVIDER_ID + this.id;}
 
     @Override
     public String getEmail() {
@@ -65,13 +65,13 @@ public class KakaoOAuth2UserAttribute extends OAuth2UserAttribute {
     }
 
     @Override
-    public void UserAttributesByOAuthToken(OAuth2AccessToken oauth2AccessToken) {
+    public void setUserAttributesByOauthToken(String oauth2AccessToken) {
 
 
         JSONObject response = WebClient.create()
                 .get()
                 .uri("https://kapi.kakao.com/v2/user/me")
-                .headers(httpHeaders -> httpHeaders.setBearerAuth(oauth2AccessToken.getAccessToken()))
+                .headers(httpHeaders -> httpHeaders.setBearerAuth(oauth2AccessToken))
                 .retrieve()
                 .bodyToMono(JSONObject.class)
                 .block();

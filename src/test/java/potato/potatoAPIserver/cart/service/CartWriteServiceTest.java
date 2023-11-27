@@ -24,10 +24,10 @@ import static org.mockito.BDDMockito.then;
  * @Since 2023-10-25
  */
 @ExtendWith(MockitoExtension.class)
-class CartServiceTest {
+class CartWriteServiceTest {
 
     @InjectMocks
-    CartService cartService;
+    CartWriteService cartWriteService;
 
     @Mock
     CartRepository cartRepository;
@@ -40,11 +40,11 @@ class CartServiceTest {
     void testGetCart() {
         // given
         Long userId = 1L;
-        Cart cart = new Cart();
+        Cart cart = Cart.builder().build();
         given(cartRepository.findByUserId(userId)).willReturn(Optional.of(cart));
 
         // when
-        Optional<Cart> result = cartService.getCart(userId);
+        Optional<Cart> result = cartWriteService.findCart(userId);
 
         // then
         assertThat(result).isPresent().contains(cart);
@@ -56,12 +56,12 @@ class CartServiceTest {
         // given
         Long userId = 1L;
         User user = new User();
-        Cart cart = new Cart();
+        Cart cart = Cart.builder().build();
         given(userRepository.findById(userId)).willReturn(Optional.of(user));
         given(cartRepository.save(any(Cart.class))).willReturn(cart);
 
         // when
-        Cart result = cartService.createCart(userId);
+        Cart result = cartWriteService.createCart(userId);
 
         // then
         then(cartRepository).should().save(any(Cart.class));

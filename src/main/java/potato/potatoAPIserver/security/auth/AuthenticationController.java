@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import potato.potatoAPIserver.security.auth.dto.AuthenticationResponse;
 import potato.potatoAPIserver.security.auth.dto.RegisterRequest;
-import potato.potatoAPIserver.security.oauth.dto.OAuth2AccessToken;
+import potato.potatoAPIserver.security.oauth.AuthorizionRequestHeader;
 
 /**
  * 로그인, 회원가입, 토큰 재발급에 관한 API
@@ -25,14 +25,14 @@ public class AuthenticationController {
     //테스트용
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@Valid @RequestBody RegisterRequest registerRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) OAuth2AccessToken oAuth2AccessToken) {
-        AuthenticationResponse authenticationResponse = authenticationService.register(registerRequest, oAuth2AccessToken);
+    public ResponseEntity<AuthenticationResponse> register(@Valid @RequestBody RegisterRequest registerRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) AuthorizionRequestHeader authorizionRequestHeader) {
+        AuthenticationResponse authenticationResponse = authenticationService.register(registerRequest, authorizionRequestHeader);
         return new ResponseEntity<>(authenticationResponse, HttpStatus.OK);
     }
 
     @PostMapping("/login/{providerName}")
-    public ResponseEntity<AuthenticationResponse> login(@PathVariable String providerName, @RequestHeader(HttpHeaders.AUTHORIZATION) OAuth2AccessToken oAuth2AccessToken) {
-        AuthenticationResponse authenticationResponse = authenticationService.login(providerName, oAuth2AccessToken);
+    public ResponseEntity<AuthenticationResponse> login(@PathVariable String providerName, @RequestHeader(HttpHeaders.AUTHORIZATION) AuthorizionRequestHeader authorizionRequestHeader) {
+        AuthenticationResponse authenticationResponse = authenticationService.login(providerName, authorizionRequestHeader);
         return new ResponseEntity<>(authenticationResponse, HttpStatus.OK);
     }
 
