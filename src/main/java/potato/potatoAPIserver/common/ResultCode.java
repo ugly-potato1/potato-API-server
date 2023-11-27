@@ -43,6 +43,12 @@ public enum ResultCode {
 
     QUANTITY_LESS_THAN_ONE("P801", "수량은 1 이상이어야 합니다."),
 
+
+    /**
+     * @author: 박건휘
+     * @since: 2023-11-25
+     */
+
     // P9xx 위시리스트 예외
     WISHLIST_NOT_FOUND("P900", "존재하지 않은 위시리스트입니다.");
 

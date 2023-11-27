@@ -5,6 +5,11 @@ import potato.potatoAPIserver.product.domain.Wishlist;
 
 import java.util.List;
 
+/**
+ * @author: 박건휘
+ * @since: 2023-11-25
+ */
+
 public interface WishlistRepository extends JpaRepository<Wishlist, Long> {
     List<Wishlist> findAllByUserId(Long userId);
 }
