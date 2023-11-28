@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.math.BigDecimal;
+
 /**
  * @author: 박건휘
  * @since: 2023-11-13
@@ -15,7 +17,7 @@ public class ProductCreateRequest {
     @NotBlank
     private String title;
     @NotNull
-    private Integer price;
+    private BigDecimal price;
     @NotBlank
     private String description;
 

@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import potato.potatoAPIserver.common.BaseTimeEntity;
 import potato.potatoAPIserver.user.domain.User;
 
+import java.math.BigDecimal;
+
 /**
  * @author 정순원
  * @since 2023-08-08
@@ -26,10 +28,10 @@ public class Order extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    private int orderPrice;
+    private BigDecimal orderPrice;
 
     @Builder
-    public Order(User user, int orderPrice) {
+    public Order(User user, BigDecimal orderPrice) {
         this.user = user;
         this.orderPrice = orderPrice;
     }

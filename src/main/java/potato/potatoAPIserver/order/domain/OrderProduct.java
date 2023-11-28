@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import potato.potatoAPIserver.common.BaseTimeEntity;
 import potato.potatoAPIserver.product.domain.Product;
 
+import java.math.BigDecimal;
+
 /**
  * @author 정순원
  * @since 2023-08-08
@@ -34,10 +36,10 @@ public class OrderProduct extends BaseTimeEntity {
     @Column(length = 100, nullable = false)
     private String name;
 
-    private int price;
+    private BigDecimal price;
 
     @Builder
-    public OrderProduct(Product product, Order order, int count, String name, int price) {
+    public OrderProduct(Product product, Order order, int count, String name, BigDecimal price) {
         this.product = product;
         this.order = order;
         this.count = count;

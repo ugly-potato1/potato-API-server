@@ -36,6 +36,9 @@ class CartProductWriteServiceTest {
     CartWriteService cartWriteService;
 
     @Mock
+    CartReadService cartReadService;
+
+    @Mock
     CartProductRepository cartProductRepository;
 
     @Mock
@@ -60,7 +63,7 @@ class CartProductWriteServiceTest {
                 .quantity(3)
                 .build();
 
-        given(cartWriteService.findCart(userId)).willReturn(Optional.of(cart));
+        given(cartReadService.findCart(userId)).willReturn(Optional.of(cart));
         given(productRepository.findById(productId)).willReturn(Optional.of(product));
         given(cartProductRepository.findCartProduct(cart.getId(), product.getId())).willReturn(Optional.of(existingCartProduct));
 
@@ -84,7 +87,7 @@ class CartProductWriteServiceTest {
         Product product = Product.builder().build();
 
         // 사용자의 장바구니에 해당 상품이 없는 상황 모의
-        given(cartWriteService.findCart(userId)).willReturn(Optional.of(cart));
+        given(cartReadService.findCart(userId)).willReturn(Optional.of(cart));
         given(productRepository.findById(request.getProductId())).willReturn(Optional.of(product));
         given(cartProductRepository.findCartProduct(cart.getId(), product.getId())).willReturn(Optional.empty());
 
@@ -112,7 +115,7 @@ class CartProductWriteServiceTest {
                 .build();
 
 
-        given(cartWriteService.findCart(userId)).willReturn(Optional.of(cart));
+        given(cartReadService.findCart(userId)).willReturn(Optional.of(cart));
         given(cartProductRepository.findById(cartProductId)).willReturn(Optional.of(cartProduct));
 
         // when
@@ -139,7 +142,7 @@ class CartProductWriteServiceTest {
                 .build();
 
         // given: Mockito를 사용하여 Mock 객체에 대한 행동 설정
-        given(cartWriteService.findCart(userId)).willReturn(Optional.of(cart));
+        given(cartReadService.findCart(userId)).willReturn(Optional.of(cart));
         given(cartProductRepository.findById(cartProductId)).willReturn(Optional.of(cartProduct));
 
         // when: 테스트 대상 메서드 호출

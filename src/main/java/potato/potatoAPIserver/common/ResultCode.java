@@ -43,6 +43,7 @@ public enum ResultCode {
 
     QUANTITY_LESS_THAN_ONE("P801", "수량은 1 이상이어야 합니다."),
 
+    CART_NOT_FOUND("P802", "유저의 장바구니가 존재하지 않습니다."),
 
     /**
      * @author: 박건휘
@@ -51,6 +52,7 @@ public enum ResultCode {
 
     // P9xx 위시리스트 예외
     WISHLIST_NOT_FOUND("P900", "존재하지 않은 위시리스트입니다.");
+
 
     private final String code;
     private final String message;
