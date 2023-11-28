@@ -27,9 +27,11 @@ public enum ResultCode {
     USER_NOT_FOUND("P400", "존재하지 않는 유저입니다."),
     USER_ALREADY_JOIN("F401", "이미 회원가입된 유저입니다."),
     USER_NOT_JOINED("F402", "회원가입이 되어있지 않은 유저입니다."),
+    USER_NOT_PERMISSION("F403", "권한이 없는 유저입니다."),
 
     // P5xx 주문예외
     ORDER_NOT_FOUND("P500", "존재하지 않은 주문입니다."),
+    ORDER_PRODUCT_NOT_FOUND("P501", "주문 상품이 존재하지 않습니다."),
 
     // P6xx 상품예외
     PRODUCT_NOT_FOUND("P600", "존재하지 않은 상품입니다."),
