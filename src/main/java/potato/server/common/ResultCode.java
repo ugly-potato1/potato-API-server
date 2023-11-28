@@ -40,7 +40,9 @@ public enum ResultCode {
 
     // P8xx 장바구니 예외
     CART_PRODUCT_NOT_FOUND("P800", "존재하지 않은 장바구니 상품입니다."),
-    QUANTITY_LESS_THAN_ONE("P801", "수량은 1 이상이어야 합니다.");
+    QUANTITY_LESS_THAN_ONE("P801", "수량은 1 이상이어야 합니다."),
+    CART_NOT_FOUND("P802", "유저의 장바구니가 존재하지 않습니다.")
+    ;
 
     private final String code;
     private final String message;
