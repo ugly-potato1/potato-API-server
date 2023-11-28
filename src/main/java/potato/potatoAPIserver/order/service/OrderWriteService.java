@@ -31,7 +31,7 @@ public class OrderWriteService {
     private final CartReadService cartReadService;
     private final CartProductRepository cartProductRepository;
 
-    public Long createOrder(Long userId, OrderCreateRequest orderCreateRequest) {
+    public Long createOrderWithCart(Long userId, OrderCreateRequest orderCreateRequest) {
         Cart cart = cartReadService.findCart(userId).orElseThrow(() -> new CustomException(HttpStatus.BAD_REQUEST, ResultCode.CART_NOT_FOUND));
 
         List<Long> cartProductIdList = orderCreateRequest.getCartProductIdList();
@@ -56,7 +56,7 @@ public class OrderWriteService {
 
         Order savedOrder = orderRepository.save(order);
 
-        orderProductWriteService.createOrderProduct(userId, savedOrder, selectedCartProductList);
+        orderProductWriteService.createOrderProductWithCart(userId, savedOrder, selectedCartProductList);
 
         return savedOrder.getId();
     }

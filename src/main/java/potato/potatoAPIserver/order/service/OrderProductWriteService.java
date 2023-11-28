@@ -19,7 +19,7 @@ public class OrderProductWriteService {
     private final OrderProductRepository orderProductRepository;
     private final CartProductWriteService cartProductWriteService;
 
-    public void createOrderProduct(Long userId, Order order, List<CartProduct> cartProductParamList) {
+    public void createOrderProductWithCart(Long userId, Order order, List<CartProduct> cartProductParamList) {
         cartProductParamList.forEach(c -> {
             orderProductRepository.save(
                     OrderProduct.builder()

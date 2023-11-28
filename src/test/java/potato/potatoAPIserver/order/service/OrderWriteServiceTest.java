@@ -26,6 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.*;
 
+@DisplayName("주문 서비스 테스트 - 쓰기")
 @ExtendWith(MockitoExtension.class)
 class OrderWriteServiceTest {
 
@@ -61,17 +62,17 @@ class OrderWriteServiceTest {
         );
         given(cartProductRepository.findAllByCartId(cart.getId())).willReturn(cartProductList);
         given(orderRepository.save(any(Order.class))).willAnswer(invocation -> createOrder(1L));
-        willDoNothing().given(orderProductWriteService).createOrderProduct(any(Long.class), any(Order.class), anyList());
+        willDoNothing().given(orderProductWriteService).createOrderProductWithCart(any(Long.class), any(Order.class), anyList());
 
         // When
-        Long orderId = sut.createOrder(userId, orderCreateRequest);
+        Long orderId = sut.createOrderWithCart(userId, orderCreateRequest);
 
         // Then
         then(cartReadService).should(times(1)).findCart(userId);
         then(cartProductRepository).should(times(1)).findAllByCartId(cart.getId());
         then(userService).should(times(1)).getUserById(userId);
         then(orderRepository).should(times(1)).save(any(Order.class));
-        then(orderProductWriteService).should(times(1)).createOrderProduct(any(Long.class), any(Order.class), anyList());
+        then(orderProductWriteService).should(times(1)).createOrderProductWithCart(any(Long.class), any(Order.class), anyList());
 
         assertThat(orderId).isNotNull().isEqualTo(1L); // 생성된 ID가 예상대로 반환되었는지 확인
     }

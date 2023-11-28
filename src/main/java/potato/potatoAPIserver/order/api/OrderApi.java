@@ -31,7 +31,7 @@ public class OrderApi {
             @Valid @RequestBody OrderCreateRequest orderCreateRequest
     ) {
 
-        Long order = orderWriteService.createOrder(userDTO.getId(), orderCreateRequest);
+        Long order = orderWriteService.createOrderWithCart(userDTO.getId(), orderCreateRequest);
 
         return new ResponseForm<>(
                 new OrderCreateResponse(ServletUriComponentsBuilder
