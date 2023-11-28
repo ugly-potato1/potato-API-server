@@ -28,6 +28,8 @@ class CartWriteServiceTest {
 
     @InjectMocks
     CartWriteService cartWriteService;
+    @Mock
+    CartReadService cartReadService;
 
     @Mock
     CartRepository cartRepository;
@@ -44,7 +46,7 @@ class CartWriteServiceTest {
         given(cartRepository.findByUserId(userId)).willReturn(Optional.of(cart));
 
         // when
-        Optional<Cart> result = cartWriteService.findCart(userId);
+        Optional<Cart> result = cartReadService.findCart(userId);
 
         // then
         assertThat(result).isPresent().contains(cart);

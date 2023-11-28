@@ -1,4 +1,4 @@
-package potato.potatoAPIserver.cart.dto.response;
+package potato.potatoAPIserver.cart.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,12 +7,12 @@ import potato.potatoAPIserver.product.dto.ProductDto;
 
 @Getter
 @AllArgsConstructor
-public class CartProductResponse {
+public class CartProductParam {
     private Long id;
     private ProductDto product;
     private int quantity;
 
-    public static CartProductResponse from(CartProduct entity) {
-        return new CartProductResponse(entity.getId(), ProductDto.from(entity.getProduct()), entity.getQuantity());
+    public static CartProductParam from(CartProduct entity) {
+        return new CartProductParam(entity.getId(), ProductDto.from(entity.getProduct()), entity.getQuantity());
     }
 }
