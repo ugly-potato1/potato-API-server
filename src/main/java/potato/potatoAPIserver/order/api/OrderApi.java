@@ -3,14 +3,13 @@ package potato.potatoAPIserver.order.api;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import potato.potatoAPIserver.common.ResponseForm;
 import potato.potatoAPIserver.order.dto.request.OrderCreateRequest;
 import potato.potatoAPIserver.order.dto.response.OrderCreateResponse;
+import potato.potatoAPIserver.order.dto.response.OrderResponse;
+import potato.potatoAPIserver.order.service.OrderReadService;
 import potato.potatoAPIserver.order.service.OrderWriteService;
 import potato.potatoAPIserver.security.auth.dto.AuthorityUserDTO;
 
@@ -24,6 +23,7 @@ import potato.potatoAPIserver.security.auth.dto.AuthorityUserDTO;
 public class OrderApi {
 
     private final OrderWriteService orderWriteService;
+    private final OrderReadService orderReadService;
 
     @PostMapping
     public ResponseForm<OrderCreateResponse> createOrderWithCart(
@@ -40,5 +40,14 @@ public class OrderApi {
                         .buildAndExpand(order)
                         .toUri())
         );
+    }
+
+    @GetMapping("/{order-id}")
+    public ResponseForm<OrderResponse> findOrder(
+            @AuthenticationPrincipal AuthorityUserDTO userDTO,
+            @PathVariable("order-id") Long orderId
+
+    ) {
+        return new ResponseForm<>(orderReadService.findOrder(userDTO.getId(), orderId));
     }
 }
