@@ -26,7 +26,6 @@ public class OrderProductWriteService {
                             .order(order)
                             .product(c.getProduct())
                             .price(c.getProduct().getPrice())
-                            .name(c.getProduct().getTitle())
                             .build());
 
             cartProductWriteService.deleteCartProduct(userId, c.getId());

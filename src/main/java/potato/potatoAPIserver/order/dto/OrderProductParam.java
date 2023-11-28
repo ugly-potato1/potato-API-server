@@ -13,11 +13,10 @@ public class OrderProductParam {
 
     private Long orderProductId;
     private int count;
-    private String name;
     private BigDecimal price;
     private ProductParam productParam;
 
     public static OrderProductParam from(OrderProduct entity) {
-        return new OrderProductParam(entity.getId(), entity.getCount(), entity.getName(), entity.getPrice(), ProductParam.from(entity.getProduct()));
+        return new OrderProductParam(entity.getId(), entity.getCount(), entity.getPrice(), ProductParam.from(entity.getProduct()));
     }
 }
