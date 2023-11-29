@@ -33,17 +33,13 @@ public class OrderProduct extends BaseTimeEntity {
 
     private int count;
 
-    @Column(length = 100, nullable = false)
-    private String name;
-
     private BigDecimal price;
 
     @Builder
-    public OrderProduct(Product product, Order order, int count, String name, BigDecimal price) {
+    public OrderProduct(Product product, Order order, int count, BigDecimal price) {
         this.product = product;
         this.order = order;
         this.count = count;
-        this.name = name;
         this.price = price;
     }
 }

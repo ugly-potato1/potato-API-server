@@ -33,14 +33,11 @@ class CartProductWriteServiceTest {
     CartProductWriteService sut;
 
     @Mock
-    CartWriteService cartWriteService;
-
-    @Mock
     CartReadService cartReadService;
-
+    @Mock
+    CartWriteService cartWriteService;
     @Mock
     CartProductRepository cartProductRepository;
-
     @Mock
     ProductRepository productRepository;
 
