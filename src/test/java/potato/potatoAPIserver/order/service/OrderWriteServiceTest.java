@@ -13,11 +13,8 @@ import potato.potatoAPIserver.cart.service.CartReadService;
 import potato.potatoAPIserver.order.domain.Order;
 import potato.potatoAPIserver.order.dto.request.OrderCreateRequest;
 import potato.potatoAPIserver.order.repository.OrderRepository;
-import potato.potatoAPIserver.product.domain.Product;
 import potato.potatoAPIserver.user.service.UserService;
 
-import java.lang.reflect.Field;
-import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +22,8 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.*;
+import static potato.potatoAPIserver.fixture.CartFixture.creatCartProduct;
+import static potato.potatoAPIserver.fixture.OrderFixture.createOrder;
 
 @DisplayName("주문 서비스 테스트 - 쓰기")
 @ExtendWith(MockitoExtension.class)
@@ -61,7 +60,7 @@ class OrderWriteServiceTest {
                 creatCartProduct(3L)
         );
         given(cartProductRepository.findAllByCartId(cart.getId())).willReturn(cartProductList);
-        given(orderRepository.save(any(Order.class))).willAnswer(invocation -> createOrder(1L));
+        given(orderRepository.save(any(Order.class))).willAnswer(invocation -> createOrder(1L, userId));
         willDoNothing().given(orderProductWriteService).createOrderProductWithCart(any(Long.class), any(Order.class), anyList());
 
         // When
@@ -78,38 +77,6 @@ class OrderWriteServiceTest {
     }
 
 
-    private Product createProduct(Long id) throws NoSuchFieldException, IllegalAccessException {
-        Product product = Product.builder()
-                .price(BigDecimal.ONE)
-                .build();
 
-        Field idField = Product.class.getDeclaredField("id");
-        idField.setAccessible(true);
-        idField.set(product, id);
 
-        return product;
-    }
-
-    private CartProduct creatCartProduct(Long id) throws NoSuchFieldException, IllegalAccessException {
-        CartProduct cartProduct = CartProduct.builder()
-                .quantity(5)
-                .product(createProduct(id))
-                .build();
-
-        Field idField = CartProduct.class.getDeclaredField("id");
-        idField.setAccessible(true);
-        idField.set(cartProduct, id);
-
-        return cartProduct;
-    }
-
-    private Order createOrder(Long id) throws NoSuchFieldException, IllegalAccessException {
-        Order order = Order.builder().build();
-
-        Field idField = Order.class.getDeclaredField("id");
-        idField.setAccessible(true);
-        idField.set(order, id);
-
-        return order;
-    }
 }

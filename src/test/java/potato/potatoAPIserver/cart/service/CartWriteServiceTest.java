@@ -28,29 +28,12 @@ class CartWriteServiceTest {
 
     @InjectMocks
     CartWriteService cartWriteService;
-    @Mock
-    CartReadService cartReadService;
 
     @Mock
     CartRepository cartRepository;
-
     @Mock
     UserRepository userRepository;
 
-    @DisplayName("사용자의 장바구니를 반환")
-    @Test
-    void testGetCart() {
-        // given
-        Long userId = 1L;
-        Cart cart = Cart.builder().build();
-        given(cartRepository.findByUserId(userId)).willReturn(Optional.of(cart));
-
-        // when
-        Optional<Cart> result = cartReadService.findCart(userId);
-
-        // then
-        assertThat(result).isPresent().contains(cart);
-    }
 
     @DisplayName("새로운 사용자의 장바구니를 생성")
     @Test
