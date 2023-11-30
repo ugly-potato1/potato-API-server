@@ -40,7 +40,12 @@ public enum ResultCode {
 
     // P8xx 장바구니 예외
     CART_PRODUCT_NOT_FOUND("P800", "존재하지 않은 장바구니 상품입니다."),
-    QUANTITY_LESS_THAN_ONE("P801", "수량은 1 이상이어야 합니다.");
+    QUANTITY_LESS_THAN_ONE("P801", "수량은 1 이상이어야 합니다."),
+
+    //P9xx 결제 예외
+    PAYMENT_PREVALIDATION_FAIL("P900", "결제정보 사전등록에 실패하였습니다(이미 등록된 merchant_uid입니다)."),
+    IMP_NOT_VALIDAION("P901", "잘못된 API키,secret키입니다."),
+    IMP_NOT_ACCESSTOKEN("P902", "유효하지 않은 아임포트 엑세스토큰입니다.");
 
     private final String code;
     private final String message;

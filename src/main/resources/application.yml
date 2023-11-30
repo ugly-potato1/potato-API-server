@@ -41,3 +41,7 @@ cloud:
       auto: false
     stack:
       auto: false
+
+imp:
+  key: ${API_SECRET_KEY}
+  secret-key: ${API_KEY}
