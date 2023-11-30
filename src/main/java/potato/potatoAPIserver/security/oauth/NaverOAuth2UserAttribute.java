@@ -14,6 +14,7 @@ import java.util.Map;
 
 /**
  * 네이버에서 받아오는 사용자 정보 담는 DTO
+ *
  * @Author 정순원
  * @Since 2023-08-19
  */
@@ -31,7 +32,7 @@ public class NaverOAuth2UserAttribute extends OAuth2UserAttribute {
     public User toEntity() {
         return User.builder()
                 .providerName(NAVER_PROVIDER_ID)
-                .providerId(NAVER_PROVIDER_ID+" "+getProviderId())
+                .providerId(NAVER_PROVIDER_ID + " " + getProviderId())
                 .email(getEmail())
                 .name(getName())
                 .gender(Gender.valueOf(getGender().toUpperCase())) //대소문자 구별하니 바꿔줘야 함
@@ -41,7 +42,7 @@ public class NaverOAuth2UserAttribute extends OAuth2UserAttribute {
 
     @Override
     public String getProviderId() {
-        return NAVER_PROVIDER_ID+ response.get("id").toString();
+        return NAVER_PROVIDER_ID + " " + response.get("id").toString();
     }
 
     @Override
@@ -76,7 +77,7 @@ public class NaverOAuth2UserAttribute extends OAuth2UserAttribute {
                 .bodyToMono(JSONObject.class)
                 .block();
 
-        Map<String, Object> kakaoAccount = (Map<String, Object>)response.get("response");
+        this.response = (Map<String, Object>) response.get("response");
 
     }
 }
