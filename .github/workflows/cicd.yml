@@ -1,0 +1,55 @@
+name: github-actions-with-AWS-CodeDeploy
+
+# 실행 시기
+on:
+  push:
+    branches: develop
+  pull_request:
+    branches: develop
+
+# AWS S3에 소스 파일 올리기
+env:
+  S3_BUCKET_NAME: flintbucket
+  AWS_REGION: ap-northeast-2
+  CODEDEPLOY_NAME: Flint-CD-CodeDeploy
+  CODEDEPLOY_GROUP: Flint
+    
+# 작업 내용
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Chekcout Main Branch
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'temurin'
+
+      - name: Grant Permission Gradlew
+        run: chmod +x gradlew
+        shell: bash
+
+      - name: Build Gradle
+        run: ./gradlew build
+        shell: bash
+
+      - name: Make zip file
+        run: zip -r ./FLINT_BACK_ACTION.zip .
+        shell: bash
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+      
+      - name: Upload to S3
+        run: aws s3 cp --region ap-northeast-2 ./FLINT_BACK_ACTION.zip s3://$S3_BUCKET_NAME/deploy/FLINT_BACK_ACTION.zip
+
+      - name: AWS Code Deploy
+        run: aws deploy create-deployment --application-name $CODEDEPLOY_NAME --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name $CODEDEPLOY_GROUP --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=deploy/FLINT_BACK_ACTION.zip
+      
