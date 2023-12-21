@@ -1,0 +1,75 @@
+# 실행 시기
+on:
+  push:
+    branches: develop
+  pull_request:
+    branches: develop
+    
+# 작업 내용
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Chekcout Main Branch
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'temurin'
+          
+      - name: Set application.yml  
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: src/main/resources/application.yml
+        env:
+          jwt.secretkey: ${{ secrets.SECRETKEY }} 
+          cloud.aws.credentials.access-key: ${{ secrets.AWS_ACCESSKEY }} 
+          cloud.aws.credentials.secret-key: ${{ secrets.AWS_SECRETKEY }} 
+          imp.secret-key: ${{ secrets.API_SECRET_KEY }}
+          imp.key: ${{ secrets.API_KEY }}
+        
+    
+      ## gradle caching/빌드 시간 단축
+      - name: Gradle Caching
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Grant Permission Gradlew
+        run: chmod +x gradlew
+        shell: bash
+
+      - name: Build Gradle
+        run: ./gradlew build
+        shell: bash
+
+        ## docker build & push to develop
+      - name: Docker build & push to dev
+        if: contains(github.ref, 'develop')
+        run: |
+            docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+            docker build -t ${{ secrets.DOCKER_USERNAME }}/backend .
+            docker push ${{ secrets.DOCKER_USERNAME }}/backend
+
+         ## deploy to develop
+      - name: Deploy to dev
+        uses: appleboy/ssh-action@master
+        id: deploy-dev
+        if: contains(github.ref, 'develop')
+        with:
+          host: ${{ secrets.HOST_DEV }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          port: 22
+          script: |
+            sudo docker ps
+            sudo docker pull ${{ secrets.DOCKER_REPO }}/uglypotato-dev
+            docker-compose up -d
+            docker image prune -f
