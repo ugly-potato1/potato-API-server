@@ -1,0 +1,11 @@
+version: '3.1'
+
+services:
+
+  api:
+    image: ${DOCKER_USERNAME}/${DOCKER_REPO}:${IMAGE_TAG}
+
+    container_name: ${DOCKER_REPO}-blue
+
+    ports:
+      - '8080:8000'
