@@ -70,6 +70,6 @@ jobs:
           port: 22
           script: |
             sudo docker ps
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/backend
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/backend:latest
             docker-compose up -d
             docker image prune -f
