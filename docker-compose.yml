@@ -3,7 +3,7 @@ services:
 
   spring:
     container_name: spring
-    image: uglypotato/backend:lastest
+    image: uglypotato/backend:latest
     expose:
       - 8080
     ports:
