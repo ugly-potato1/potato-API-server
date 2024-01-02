@@ -1,0 +1,9 @@
+version: '3.1'
+
+services:
+
+  backend:
+    build: .
+    container_name: backend-blue
+    ports:
+      - "8081:80"
