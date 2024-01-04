@@ -1,6 +1,7 @@
 package potato.server.order.api;
 
 import jakarta.validation.Valid;
+import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,15 @@ public class OrderApi {
     private final OrderWriteService orderWriteService;
     private final OrderReadService orderReadService;
 
+    @GetMapping("/{order-id}")
+    public ResponseForm<OrderResponse> findOrder(
+            @AuthenticationPrincipal AuthorityUserDTO userDTO,
+            @PathVariable("order-id") Long orderId
+
+    ) {
+        return new ResponseForm<>(orderReadService.findOrder(userDTO.getId(), orderId));
+    }
+
     @PostMapping
     public ResponseForm<OrderCreateResponse> createOrderWithCart(
             @AuthenticationPrincipal AuthorityUserDTO userDTO,
@@ -42,12 +52,12 @@ public class OrderApi {
         );
     }
 
-    @GetMapping("/{order-id}")
-    public ResponseForm<OrderResponse> findOrder(
+    @DeleteMapping("/order-id")
+    public ResponseForm<Void> deleteOrder(
             @AuthenticationPrincipal AuthorityUserDTO userDTO,
-            @PathVariable("order-id") Long orderId
-
+            @PathParam("order-id") Long orderId
     ) {
-        return new ResponseForm<>(orderReadService.findOrder(userDTO.getId(), orderId));
+        orderWriteService.deleteOrder(userDTO.getId(), orderId);
+        return new ResponseForm<>();
     }
 }

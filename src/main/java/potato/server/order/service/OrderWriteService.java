@@ -61,6 +61,18 @@ public class OrderWriteService {
         return savedOrder.getId();
     }
 
+    public void deleteOrder(Long userId, Long orderId) {
+        User user = userService.getUserById(userId);
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, ResultCode.ORDER_NOT_FOUND));
+
+        if (order.getUser() != user) {
+            throw new CustomException(HttpStatus.FORBIDDEN, ResultCode.AUTH_USER_NOT, "해당 유저의 주문이 아닙니다.");
+        }
+
+        orderRepository.delete(order);
+    }
+
     private static BigDecimal getTotalPrice(List<CartProduct> selectedCartProductList) {
         return selectedCartProductList.stream()
                 .map(cartProduct -> cartProduct.getProduct().getPrice().multiply(BigDecimal.valueOf(cartProduct.getQuantity())))
