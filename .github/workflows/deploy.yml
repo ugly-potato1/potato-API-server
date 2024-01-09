@@ -79,5 +79,5 @@ jobs:
           
       # CodeDelploy에 배포를 요청
       - name: Code Deploy 배포 요청
-        run: aws deploy create-deployment --application-name ugly-potato --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name ugly-potato-deploy --s3-location bucket=ugly-potato-bucket,bundleType=zip,key=spring-build.zip
+        run: aws deploy create-deployment --application-name ugly-potato --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name ugly-potato-deploy --ignore-application-stop-failures --s3-location bucket=ugly-potato-bucket,bundleType=zip,key=spring-build.zip
 
