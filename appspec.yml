@@ -8,7 +8,7 @@ files:
   # 코드 파일의 소스 경로
   - source: /
     # 코드 파일의 대상 경로 -> /home/ec2-user/app 디렉토리로 파일을 복사한다.
-    destination: /home/ec2-user/app
+    destination: /home/ec2-user/ugly-potato
     # 대상 경로에 이미 파일이 존재하는 경우, 덮어쓰기를 허용할지 여부
     overwrite: yes
 
