@@ -75,7 +75,7 @@ jobs:
         run: |
           aws s3 cp \
           --region ap-northeast-2 \
-          ./spring-build.zip s3://ugly-potato-bucket.zip
+          ./spring-build.zip s3://ugly-potato-bucket
           
       # CodeDelploy에 배포를 요청
       - name: Code Deploy 배포 요청
