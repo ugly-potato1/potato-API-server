@@ -77,10 +77,5 @@ jobs:
           
       # CodeDelploy에 배포를 요청
       - name: Code Deploy 배포 요청
-        run: aws deploy create-deployment \ 
-         --application-name potato \
-         --deployment-config-name CodeDeployDefault.AllAtOnce \
-         --deployment-group-name potato_deploy \
-         --ignore-application-stop-failures \
-         --s3-location bucket=ugly-potato-bucket,bundleType=zip,key=$GITHUB_SHA.zip
+        run: aws deploy create-deployment --application-name potato --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name potato_deploy --s3-location bucket=ugly-potato-bucket,bundleType=zip,key=$GITHUB_SHA.zip
 
