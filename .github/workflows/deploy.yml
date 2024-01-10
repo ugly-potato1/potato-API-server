@@ -73,7 +73,7 @@ jobs:
       # S3에 프로젝트를 업로드
       - name: S3에 프로젝트 업로드
         run: |
-         aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$S3_BUCKET_NAME/$PROJECT_NAME/$GITHUB_SHA.zip
+         aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://ugly-potato-bucket/$GITHUB_SHA.zip
           
       # CodeDelploy에 배포를 요청
       - name: Code Deploy 배포 요청
