@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 작업 디렉토리를 /home/ec2-user/app으로 변경
-cd /home/ec2-user/app
+cd /home/ec2-user/ugly-potato
 
 # 환경변수 DOCKER_APP_NAME을 spring으로 설정
 DOCKER_APP_NAME=spring
@@ -55,4 +55,4 @@ fi
   echo "배포 종료  : $(date +%Y)-$(date +%m)-$(date +%d) $(date +%H):$(date +%M):$(date +%S)" >> /home/ec2-user/deploy.log
 
   echo "===================== 배포 완료 =====================" >> /home/ec2-user/deploy.log
-  echo >> home/ec2-user/deploy.log
+  echo >> /home/ec2-user/deploy.log
