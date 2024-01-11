@@ -34,7 +34,7 @@ if [ -z "$EXIST_BLUE" ]; then
   sudo docker-compose -p ${DOCKER_APP_NAME}-green -f docker-compose.green.yml down
 
    # 사용하지 않는 이미지 삭제
-  sudo docker image prune -af
+#  sudo docker image prune -af
 
   echo "green 중단 완료 : $(date +%Y)-$(date +%m)-$(date +%d) $(date +%H):$(date +%M):$(date +%S)" >> /home/ec2-user/deploy.log
 
@@ -47,7 +47,7 @@ else
 
   echo "blue 중단 시작 : $(date +%Y)-$(date +%m)-$(date +%d) $(date +%H):$(date +%M):$(date +%S)" >> /home/ec2-user/deploy.log
   sudo docker-compose -p ${DOCKER_APP_NAME}-blue -f docker-compose.blue.yml down
-  sudo docker image prune -af
+#  sudo docker image prune -af
 
   echo "blue 중단 완료 : $(date +%Y)-$(date +%m)-$(date +%d) $(date +%H):$(date +%M):$(date +%S)" >> /home/ec2-user/deploy.log
 
