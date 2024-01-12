@@ -1,4 +1,4 @@
-package potato.server.global.config;
+package potato.server.config;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

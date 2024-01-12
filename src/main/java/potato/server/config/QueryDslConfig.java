@@ -1,4 +1,4 @@
-package potato.server.global.config;
+package potato.server.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;

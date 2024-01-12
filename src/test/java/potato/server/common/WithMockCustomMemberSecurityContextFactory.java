@@ -27,7 +27,7 @@ public class WithMockCustomMemberSecurityContextFactory implements WithSecurityC
         AuthorityUserDTO authUser= AuthorityUserDTO.builder()
                 .id(1L)
                 .email("test@test.com")
-                .providerId("kakao test")
+                .providerId("kakao_test")
                 .build();
         context.setAuthentication(new UsernamePasswordAuthenticationToken(authUser, "", authorities));
         return context;
