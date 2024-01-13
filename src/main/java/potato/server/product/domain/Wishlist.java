@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
+import org.hibernate.annotations.DialectOverride;
 import potato.server.common.BaseTimeEntity;
 import potato.server.user.domain.User;
 
@@ -30,7 +30,6 @@ public class Wishlist extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-
     @Builder
     public Wishlist(Product product, User user) {
         this.product = product;
