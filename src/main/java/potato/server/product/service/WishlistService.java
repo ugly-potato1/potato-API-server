@@ -18,7 +18,6 @@ import java.util.List;
  * @author: 박건휘
  * @since: 2023-11-25
  */
-
 @Service
 @RequiredArgsConstructor
 public class WishlistService {

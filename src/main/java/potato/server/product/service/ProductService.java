@@ -1,6 +1,5 @@
 package potato.server.product.service;
 
-import jakarta.persistence.OptimisticLockException;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.http.HttpStatus;
@@ -10,10 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 import potato.server.common.CustomException;
 import potato.server.common.ResultCode;
 import potato.server.product.domain.Product;
+import potato.server.product.dto.request.ProductUpdateRequest;
 import potato.server.product.repository.ProductRepository;
 import potato.server.product.dto.request.ProductCreateRequest;
 import potato.server.product.dto.response.ProductResponse;
-import potato.server.product.repository.ProductRepository;
 
 /**
  * @author: 박건휘
@@ -60,4 +59,12 @@ public class ProductService {
         return productRepository.findById(productId)
                 .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, ResultCode.PRODUCT_NOT_FOUND));
     }
+
+    @Transactional
+    public ProductResponse updateProduct(ProductUpdateRequest productUpdateRequest) {
+        Product product = productRepository.findById(productUpdateRequest.getProductId()).orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, ResultCode.PRODUCT_NOT_FOUND));
+        product.updateProduct(productUpdateRequest);
+        return ProductResponse.of(product);
+    }
+
 }

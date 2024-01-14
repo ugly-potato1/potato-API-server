@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import potato.server.common.BaseTimeEntity;
+import potato.server.product.dto.request.ProductUpdateRequest;
 import java.math.BigDecimal;
 
 /**
@@ -43,17 +44,28 @@ public class Product extends BaseTimeEntity {
     private Integer version;
 
     @Builder
-    public Product(Category category, String title, BigDecimal price, String description, Integer stock) {
+    public Product(Category category, String title, BigDecimal price, String description, Integer stock, Integer version, Integer hit) {
         this.category = category;
         this.title = title;
         this.price = price;
         this.description = description;
         this.stock = stock;
-        this.version=0;
+        this.version = 0;
         this.hit = 0;
     }
 
     public void addHit(){
         this.hit++;
+    }
+
+    public void updateProduct(ProductUpdateRequest productUpdateRequest) {
+        if (productUpdateRequest.getTitle() != null)
+            this.title = productUpdateRequest.getTitle();
+        if (productUpdateRequest.getPrice() != null)
+            this.price = productUpdateRequest.getPrice();
+        if (productUpdateRequest.getDescription() != null)
+            this.description = productUpdateRequest.getDescription();
+        if (productUpdateRequest.getStock() != null)
+            this.stock = productUpdateRequest.getStock();
     }
 }

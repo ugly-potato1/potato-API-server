@@ -3,6 +3,8 @@ package potato.server.product.dto.response;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import potato.server.product.domain.Product;
+
 import java.math.BigDecimal;
 
 /**
@@ -29,5 +31,15 @@ public class ProductResponse {
                 .version(version)
                 .hit(hit)
                 .build();
+    }
+
+    public static ProductResponse of(Product product) {
+        return new ProductResponse(
+                product.getTitle(),
+                product.getPrice(),
+                product.getDescription(),
+                product.getStock(),
+                product.getVersion(),
+                product.getHit());
     }
 }

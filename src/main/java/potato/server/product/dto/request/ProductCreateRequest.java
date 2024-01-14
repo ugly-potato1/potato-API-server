@@ -13,10 +13,13 @@ import java.math.BigDecimal;
 @Getter
 @AllArgsConstructor
 public class ProductCreateRequest {
+
     @NotBlank
     private String title;
+
     @NotNull
     private BigDecimal price;
+
     @NotBlank
     private String description;
 
