@@ -1,7 +1,8 @@
 package potato.server.product.dto.response;
 
-import lombok.AllArgsConstructor;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import potato.server.product.domain.Product;
 
@@ -13,7 +14,7 @@ import java.math.BigDecimal;
  */
 @Builder
 @Getter
-@AllArgsConstructor
+@Data
 public class ProductResponse {
     private String title;
     private BigDecimal price;
@@ -21,6 +22,16 @@ public class ProductResponse {
     private Integer hit;
     private Integer stock;
     private Integer version;
+
+    @QueryProjection
+    public ProductResponse(String title, BigDecimal price, String description, Integer stock, Integer version, Integer hit) {
+        this.title = title;
+        this.price = price;
+        this.description = description;
+        this.stock = stock;
+        this.version = version;
+        this.hit = hit;
+    }
 
     public static ProductResponse of(String title, BigDecimal price, String description, Integer stock, Integer version, Integer hit) {
         return ProductResponse.builder()

@@ -44,14 +44,15 @@ public class Product extends BaseTimeEntity {
     private Integer version;
 
     @Builder
-    public Product(Category category, String title, BigDecimal price, String description, Integer stock, Integer version, Integer hit) {
+    public Product(Category category, String title, BigDecimal price, String description, Integer hit, Integer stock, Integer version) {
         this.category = category;
         this.title = title;
         this.price = price;
         this.description = description;
+        this.hit = 0;
         this.stock = stock;
         this.version = 0;
-        this.hit = 0;
+
     }
 
     public void addHit(){

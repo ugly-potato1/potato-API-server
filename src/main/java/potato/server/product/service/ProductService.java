@@ -14,6 +14,8 @@ import potato.server.product.repository.ProductRepository;
 import potato.server.product.dto.request.ProductCreateRequest;
 import potato.server.product.dto.response.ProductResponse;
 
+import java.util.List;
+
 /**
  * @author: 박건휘
  * @since: 2023-10-11
@@ -67,4 +69,8 @@ public class ProductService {
         return ProductResponse.of(product);
     }
 
+    @Transactional(readOnly = true)
+    public List<ProductResponse> getAllProducts() {
+        return productRepository.findAllProducts();
+    }
 }
