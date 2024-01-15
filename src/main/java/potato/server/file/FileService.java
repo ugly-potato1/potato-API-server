@@ -1,5 +1,6 @@
 package potato.server.file;
 
+import com.amazonaws.AmazonServiceException;
 import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.Headers;
@@ -88,5 +89,16 @@ public class FileService {
      */
     private String createFileId() {
         return UUID.randomUUID().toString();
+    }
+
+    /**
+     * 파일 직접 삭제
+     */
+    public void deleteFile(String path) {
+        try {
+            amazonsS3Client.deleteObject(bucket, path);
+        } catch (AmazonServiceException e) {
+            System.err.println(e.getErrorMessage());
+        }
     }
 }
