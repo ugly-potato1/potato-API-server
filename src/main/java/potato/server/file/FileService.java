@@ -22,7 +22,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class FileService {
 
-    private static String PREFIX = "uglypotato-bucket";
+    private static final String PREFIX = "uglypotato-bucket";
     private final AmazonS3Client amazonsS3Client;
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
@@ -73,7 +73,6 @@ public class FileService {
     /**
      * 파일의 전체 경로를 생성
      *
-     * @param prefix 디렉토리 경로
      * @return 파일의 전체 경로
      */
     private String createPath(String fileName) {
