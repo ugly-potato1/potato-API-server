@@ -1,4 +1,4 @@
-package potato.server.order.dto.response;
+package potato.server.review.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

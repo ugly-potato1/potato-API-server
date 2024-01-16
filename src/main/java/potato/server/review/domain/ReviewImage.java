@@ -1,4 +1,4 @@
-package potato.server.order.domain;
+package potato.server.review.domain;
 
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -31,5 +31,9 @@ public class ReviewImage extends BaseTimeEntity {
     public ReviewImage(Review review, String link) {
         this.review = review;
         this.link = link;
+    }
+
+    public void setReview(Review review){
+        this.review = review;
     }
 }

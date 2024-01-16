@@ -1,15 +1,18 @@
-package potato.server.order.dto.request;
+package potato.server.review.dto.request;
 
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * @Author 정순원
  * @Since 2023-10-12
  */
 @Data
-@AllArgsConstructor
+@NoArgsConstructor
 public class ReviewCreateRequest {
 
     @NotNull
@@ -17,5 +20,5 @@ public class ReviewCreateRequest {
     private String content;
     @NotNull
     private int evaluation;
-    private String fileName;
+    private List<Long> reviewImageIds = new ArrayList<>();
 }

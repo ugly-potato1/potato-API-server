@@ -1,4 +1,4 @@
-package potato.server.order.domain;
+package potato.server.review.domain;
 
 import jakarta.persistence.*;
 import lombok.Builder;

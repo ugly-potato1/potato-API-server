@@ -37,8 +37,9 @@ public enum ResultCode {
     PRODUCT_NOT_FOUND("P600", "존재하지 않은 상품입니다."),
 
     // P7xx 리뷰예외
-    REVIEW_NOT_FOUND("P700", "존재하지 않은 리뷰입니다."),
+    REVIEW_NOT_FOUND("P700", "존재하지 않는 리뷰입니다."),
     REVIEW_NOT_WRITER("P701", "리뷰 작성자가 아닙니다."),
+    REVIEW_IMAGE_NOT_FOUND("P702", "존재하지 않는 리뷰 이미지입니다."),
 
     // P8xx 장바구니 예외
     CART_PRODUCT_NOT_FOUND("P800", "존재하지 않은 장바구니 상품입니다."),

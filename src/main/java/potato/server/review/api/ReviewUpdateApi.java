@@ -1,12 +1,12 @@
-package potato.server.order.api;
+package potato.server.review.api;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import potato.server.common.ResponseForm;
-import potato.server.order.dto.request.ReviewCreateRequest;
-import potato.server.order.dto.response.ReviewResponse;
-import potato.server.order.service.ReviewService;
+import potato.server.review.dto.request.ReviewCreateRequest;
+import potato.server.review.dto.response.ReviewResponse;
+import potato.server.review.service.ReviewService;
 import potato.server.security.auth.dto.AuthorityUserDTO;
 
 /**

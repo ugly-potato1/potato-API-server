@@ -1,9 +1,9 @@
-package potato.server.order.repository;
+package potato.server.review.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import potato.server.order.domain.Review;
+import potato.server.review.domain.Review;
 
 /**
  * @Author 정순원

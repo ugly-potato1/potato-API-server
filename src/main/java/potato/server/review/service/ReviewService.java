@@ -1,4 +1,4 @@
-package potato.server.order.service;
+package potato.server.review.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -6,15 +6,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import potato.server.common.CustomException;
 import potato.server.common.ResultCode;
-import potato.server.order.domain.Review;
-import potato.server.order.dto.request.ReviewCreateRequest;
-import potato.server.order.dto.response.ReviewResponse;
 import potato.server.order.repository.OrderProductRepository;
-import potato.server.order.repository.ReviewRepository;
 import potato.server.product.domain.Product;
 import potato.server.product.repository.ProductRepository;
+import potato.server.review.domain.Review;
+import potato.server.review.domain.ReviewImage;
+import potato.server.review.dto.request.ReviewCreateRequest;
+import potato.server.review.dto.response.ReviewResponse;
+import potato.server.review.repository.ReviewImageRepository;
+import potato.server.review.repository.ReviewRepository;
 import potato.server.user.domain.User;
 import potato.server.user.service.UserService;
+
+import java.util.List;
 
 /**
  * @author 정순원
@@ -28,6 +32,7 @@ public class ReviewService {
     private final ProductRepository productRepository;
     private final ReviewRepository reviewRepository;
     private final OrderProductRepository orderProductRepository;
+    private final ReviewImageRepository reviewImageRepository;
 
     @Transactional
     public ReviewResponse createReview(ReviewCreateRequest request, long userId) {
@@ -35,6 +40,7 @@ public class ReviewService {
         if (!hasPurchased) {
             throw new CustomException(HttpStatus.NOT_FOUND, ResultCode.ORDER_NOT_FOUND);
         }
+
         User user = userService.getUserById(userId);
         Product product = productRepository.findById(request.getProductId()).orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, ResultCode.PRODUCT_NOT_FOUND));
         Review review = Review.builder()
@@ -43,9 +49,19 @@ public class ReviewService {
                 .content(request.getContent())
                 .evaluation(request.getEvaluation())
                 .build();
-        Review savedReview = reviewRepository.save(review);
+        reviewRepository.save(review);
 
-        return new ReviewResponse(savedReview.getId()); //TODO 리뷰이미지 추가 예정
+        mapReviewToReviewImage(request.getReviewImageIds(), review);
+
+        return new ReviewResponse(review.getId());
+    }
+
+    private void mapReviewToReviewImage(List<Long> reviewImageIds, Review review) {
+        for (Long reviewImageId : reviewImageIds) {
+            ReviewImage reviewImage = reviewImageRepository.findById(reviewImageId)
+                    .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, ResultCode.REVIEW_IMAGE_NOT_FOUND));
+            reviewImage.setReview(review);
+        }
     }
 
     @Transactional
@@ -57,10 +73,8 @@ public class ReviewService {
     private void isWriter(long userId, long reviewId) {
         boolean tf = reviewRepository.existsByUserIdAndReviewId(userId, reviewId);
 
-        if (tf == false) {
-            throw new RuntimeException("리뷰 작성자가 아닙니다."); //TODO 예외 코드 정의후 구형
+        if (!tf) {
+            throw new CustomException(HttpStatus.NOT_FOUND, ResultCode.REVIEW_NOT_WRITER);
         }
     }
-
-
 }
