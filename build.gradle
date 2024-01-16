@@ -61,6 +61,12 @@ dependencies {
 	//AWS
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 
+    //email
+    implementation'org.springframework.boot:spring-boot-starter-mail'
+
+	//redis가 포함된 테스트를 위함
+	testImplementation 'it.ozimov:embedded-redis:0.7.2'
+
 	// mac m1 error solve
 	if (osdetector.classifier == "osx-aarch_64") {
 		runtimeOnly("io.netty:netty-resolver-dns-native-macos:4.1.77.Final:${osdetector.classifier}")
