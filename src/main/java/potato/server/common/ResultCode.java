@@ -46,7 +46,10 @@ public enum ResultCode {
     CART_NOT_FOUND("P802", "유저의 장바구니가 존재하지 않습니다."),
 
     // P9xx 주소 예외
-    ADDRESS_NOT_FOUND("P900", "존재하지 않는 주소입니다.")
+    ADDRESS_NOT_FOUND("P900", "존재하지 않는 주소입니다."),
+
+    // P10xx 위시리스트 예외
+    WISHLIST_NOT_FOUND("P1000", "존재하지 않는 위시리스트입니다.")
     ;
 
     private final String code;

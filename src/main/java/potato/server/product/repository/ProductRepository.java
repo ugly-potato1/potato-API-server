@@ -7,5 +7,5 @@ import potato.server.product.domain.Product;
  * @author: 박건휘
  * @since: 2023-09-28
  */
-public interface ProductRepository extends JpaRepository<Product, Long> {
+public interface ProductRepository extends JpaRepository<Product, Long>, ProductRepositoryCustom {
 }
