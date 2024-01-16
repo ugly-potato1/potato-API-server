@@ -6,10 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import potato.server.common.BaseTimeEntity;
 import potato.server.product.domain.Product;
+import potato.server.review.spec.ChoicedExperience;
 import potato.server.user.domain.User;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author 정순원
@@ -39,14 +37,15 @@ public class Review extends BaseTimeEntity {
     @Column(nullable = false)
     private int evaluation;
 
-    @OneToMany(mappedBy = "review")
-    private List<ReviewImage> reviewImages = new ArrayList<>();
+    @Enumerated(EnumType.STRING)
+    private ChoicedExperience choicedExperience;
 
     @Builder
-    public Review(Product product, User user, String content, int evaluation) {
+    public Review(Product product, User user, String content, int evaluation, ChoicedExperience choicedExperience) {
         this.product = product;
         this.user = user;
         this.content = content;
         this.evaluation = evaluation;
+        this.choicedExperience = choicedExperience;
     }
 }
