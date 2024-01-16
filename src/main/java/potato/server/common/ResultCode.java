@@ -21,13 +21,14 @@ public enum ResultCode {
     // P3xx: 인증, 권한에 대한 예외
     AUTH_USER_NOT("P300", "현재 권한으로 접근 불가능합니다."),
     JWT_DATE_NOT("P301", "JWT토큰이 만료되었습니다."),
-    REFRESHTOKEN_OUTDATED("F302", "새로 발급된 토큰보다 이전의 리프레시 토큰입니다."),
+    REFRESHTOKEN_OUTDATED("P302", "새로 발급된 토큰보다 이전의 리프레시 토큰입니다."),
+    MAIL_AUTHNUMBER_NOT("P303", "인증번호가 틀립니다."),
 
     // P4xx: 유저 예외
     USER_NOT_FOUND("P400", "존재하지 않는 유저입니다."),
-    USER_ALREADY_JOIN("F401", "이미 회원가입된 유저입니다."),
-    USER_NOT_JOINED("F402", "회원가입이 되어있지 않은 유저입니다."),
-    USER_NOT_PERMISSION("F403", "권한이 없는 유저입니다."),
+    USER_ALREADY_JOIN("P401", "이미 회원가입된 유저입니다."),
+    USER_NOT_JOINED("P402", "회원가입이 되어있지 않은 유저입니다."),
+    USER_NOT_PERMISSION("P403", "권한이 없는 유저입니다."),
 
     // P5xx 주문예외
     ORDER_NOT_FOUND("P500", "존재하지 않는 주문입니다."),
