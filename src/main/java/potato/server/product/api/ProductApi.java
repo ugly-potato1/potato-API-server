@@ -2,15 +2,12 @@ package potato.server.product.api;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import potato.server.common.ResponseForm;
 import potato.server.product.dto.request.ProductCreateRequest;
 import potato.server.product.dto.request.ProductUpdateRequest;
 import potato.server.product.dto.response.ProductResponse;
 import potato.server.product.service.ProductService;
-import potato.server.security.auth.dto.AuthorityUserDTO;
-import potato.server.user.dto.response.AddressResponse;
 
 import java.util.List;
 
