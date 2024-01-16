@@ -41,3 +41,8 @@ cloud:
       auto: false
     stack:
       auto: false
+
+email:
+  id: uglypotato5913@gmail.com
+  password: ldushxapuefwqfxn
+  expiration: 300000
