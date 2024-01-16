@@ -12,9 +12,10 @@ import potato.server.product.repository.ProductRepository;
 import potato.server.review.domain.Review;
 import potato.server.review.domain.ReviewImage;
 import potato.server.review.dto.request.ReviewCreateRequest;
-import potato.server.review.dto.response.ReviewResponse;
+import potato.server.review.dto.response.ReviewCreateResponse;
 import potato.server.review.repository.ReviewImageRepository;
 import potato.server.review.repository.ReviewRepository;
+import potato.server.review.spec.ChoicedExperience;
 import potato.server.user.domain.User;
 import potato.server.user.service.UserService;
 
@@ -35,7 +36,7 @@ public class ReviewService {
     private final ReviewImageRepository reviewImageRepository;
 
     @Transactional
-    public ReviewResponse createReview(ReviewCreateRequest request, long userId) {
+    public ReviewCreateResponse createReview(ReviewCreateRequest request, long userId) {
         boolean hasPurchased = orderProductRepository.existsByProductAndUser(request.getProductId(), userId);
         if (!hasPurchased) {
             throw new CustomException(HttpStatus.NOT_FOUND, ResultCode.ORDER_NOT_FOUND);
@@ -48,12 +49,13 @@ public class ReviewService {
                 .user(user)
                 .content(request.getContent())
                 .evaluation(request.getEvaluation())
+                .choicedExperience(ChoicedExperience.valueOf(request.getChoicedExperience()))
                 .build();
         reviewRepository.save(review);
 
         mapReviewToReviewImage(request.getReviewImageIds(), review);
 
-        return new ReviewResponse(review.getId());
+        return new ReviewCreateResponse(review.getId());
     }
 
     private void mapReviewToReviewImage(List<Long> reviewImageIds, Review review) {
