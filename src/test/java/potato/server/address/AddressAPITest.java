@@ -25,6 +25,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * @author 정순원
+ * @since 2024-01-16
+ */
 @SpringBootTest
 @AutoConfigureMockMvc
 class AddressAPITest {
@@ -40,7 +44,7 @@ class AddressAPITest {
     Address address3;
     User user;
     @Autowired
-    private ObjectMapper objectMapper;
+    ObjectMapper objectMapper;
 
     @BeforeEach
     void init()  {
@@ -51,7 +55,7 @@ class AddressAPITest {
                 .joinType(JoinType.KAKAO)
                 .gender(Gender.MALE)
                 .providerName("kakao")
-                .number("123-1234-1234")
+                .phoneNumber("123-1234-1234")
                 .build();
 
         userRepository.save(user);
