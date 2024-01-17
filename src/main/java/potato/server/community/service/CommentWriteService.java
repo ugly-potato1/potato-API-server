@@ -39,7 +39,6 @@ public class CommentWriteService {
             Comment parentComment = commentRepository.findById(request.getParentCommentId())
                     .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, ResultCode.COMMENT_NOT_FOUNT));
             parentComment.isCorrectPost(post);
-            parentComment.addChildComment(comment);
         }
 
         return comment.getId();

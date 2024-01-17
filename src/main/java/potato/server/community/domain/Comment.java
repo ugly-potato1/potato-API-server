@@ -11,9 +11,6 @@ import potato.server.common.CustomException;
 import potato.server.common.ResultCode;
 import potato.server.user.domain.User;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -26,10 +23,6 @@ public class Comment extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
-
-    @OrderBy("createdDate ASC")
-    @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Comment> childComments = new LinkedHashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_comment_id")
@@ -46,15 +39,6 @@ public class Comment extends BaseTimeEntity {
         this.post = post;
         this.user = user;
         this.content = content;
-    }
-
-    public void addChildComment(Comment comment) {
-        comment.setParentComment(comment);
-        this.getChildComments().add(comment);
-    }
-
-    public void setParentComment(Comment comment) {
-        this.parentComment = comment;
     }
 
     public void isCorrectPost(Post post) {
