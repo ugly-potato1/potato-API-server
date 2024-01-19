@@ -51,8 +51,16 @@ public enum ResultCode {
     ADDRESS_NOT_FOUND("P900", "존재하지 않는 주소입니다."),
 
     // P10xx 위시리스트 예외
-    WISHLIST_NOT_FOUND("P1000", "존재하지 않는 위시리스트입니다.")
+    WISHLIST_NOT_FOUND("P1000", "존재하지 않는 위시리스트입니다."),
+
+    //P11xx 결제 예외
+    IMP_PREVALIDATION_FAIL("P1100", "결제정보 사전등록에 실패하였습니다(이미 등록된 merchant_uid입니다)."),
+    IMP_NOT_VALIDAION("P1101", "잘못된 API키,secret키입니다."),
+    IMP_NOT_ACCESSTOKEN("P1102", "유효하지 않은 아임포트 엑세스토큰입니다."),
+    IMP_NOT_AMOUNT("P1103", "결제예상액과 결제금액이 다릅니다.")
     ;
+
+
 
     private final String code;
     private final String message;
