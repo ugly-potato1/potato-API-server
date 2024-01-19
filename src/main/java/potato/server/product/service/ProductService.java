@@ -9,10 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 import potato.server.common.CustomException;
 import potato.server.common.ResultCode;
 import potato.server.product.domain.Product;
-import potato.server.product.dto.request.ProductUpdateRequest;
-import potato.server.product.repository.ProductRepository;
+import potato.server.product.domain.ProductImage;
 import potato.server.product.dto.request.ProductCreateRequest;
+import potato.server.product.dto.request.ProductUpdateRequest;
 import potato.server.product.dto.response.ProductResponse;
+import potato.server.product.repository.ProductImageRepository;
+import potato.server.product.repository.ProductRepository;
 
 import java.util.List;
 
@@ -25,6 +27,9 @@ import java.util.List;
 @Transactional
 public class ProductService {
     private final ProductRepository productRepository;
+    private final ProductImageRepository productImageRepository;
+
+    @Transactional
     public void createProduct(ProductCreateRequest request) {
         Product product = Product.builder()
                 .price(request.getPrice())
@@ -33,8 +38,19 @@ public class ProductService {
                 .stock(request.getStock())
                 .build();
         productRepository.save(product);
+
+        mapProductToProductImage(request.getProductImageIds(), product);
     }
 
+    private void mapProductToProductImage(List<Long> productImageIds, Product product) {
+        for (Long productImageId : productImageIds) {
+            ProductImage productImage = productImageRepository.findById(productImageId)
+                    .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, ResultCode.PRODUCT_IMAGE_NOT_FOUND));
+            productImage.setProduct(product);
+        }
+    }
+
+    @Transactional
     public void deleteProduct(Long productId) {
         productRepository.deleteById(productId);
     }
