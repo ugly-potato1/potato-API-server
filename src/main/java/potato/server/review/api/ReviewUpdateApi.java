@@ -1,6 +1,7 @@
 package potato.server.review.api;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import potato.server.common.ResponseForm;
@@ -16,6 +17,7 @@ import potato.server.security.auth.dto.AuthorityUserDTO;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/review")
+@PreAuthorize("isAuthenticated()")
 public class ReviewUpdateApi {
 
     private final ReviewService reviewService;

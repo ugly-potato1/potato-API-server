@@ -22,6 +22,7 @@ import potato.server.security.auth.dto.AuthorityUserDTO;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/mail")
+@PreAuthorize("isAuthenticated()")
 public class MailController {
 
 
@@ -30,7 +31,6 @@ public class MailController {
     /**
      * 인증번호 보내기
      */
-    @PreAuthorize("isAuthenticated()")
     @PostMapping
     public ResponseForm<AuthNumberResponse> sendEmail(@Valid @RequestBody SendMailRequest request, @AuthenticationPrincipal AuthorityUserDTO authorityUserDTO) {
         return new ResponseForm<>(authMailService.sendCodeEmail(request.getEmail(), authorityUserDTO.getProviderId()));
