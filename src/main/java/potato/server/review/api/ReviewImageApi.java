@@ -1,6 +1,7 @@
 package potato.server.review.api;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import potato.server.common.ResponseForm;
 import potato.server.file.FileCreateRequest;
@@ -15,7 +16,8 @@ import potato.server.review.service.ReiewImageService;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/review/image")
-public class ReviewImageApi {
+@PreAuthorize("isAuthenticated()")
+public class ReviewImageUpdateApi {
 
     private final ReiewImageService reiewImageService;
 
