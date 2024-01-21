@@ -51,8 +51,17 @@ public enum ResultCode {
     ADDRESS_NOT_FOUND("P900", "존재하지 않는 주소입니다."),
 
     // P10xx 위시리스트 예외
-    WISHLIST_NOT_FOUND("P1000", "존재하지 않는 위시리스트입니다.")
+    WISHLIST_NOT_FOUND("P1000", "존재하지 않는 위시리스트입니다."),
+
+    // P11xx 게시글 예외
+    POST_NOT_FOUND("P1100", "존재하지 않는 게시글입니다."),
+
+    // P12xx 댓글 예외
+    COMMENT_NOT_FOUNT("P1200", "존재하지 않는 댓글입니다."),
+    PARENT_COMMENT_POST_MISS_MATCH("P1201", "부모 댓글의 게시글과 댓글을 작성할 게시글이 다릅니다.")
+
     ;
+
 
     private final String code;
     private final String message;
