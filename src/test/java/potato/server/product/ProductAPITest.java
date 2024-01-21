@@ -28,12 +28,6 @@ public class ProductAPITest {
     private ProductRepository productRepository;
 
     private MockMvc mockMvc;
-
-    @BeforeEach
-    public void setup() {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
-    }
-
     @Test
     public void createProductTest() throws Exception {
         ProductCreateRequest request = new ProductCreateRequest("New Product", new BigDecimal("100.00"), "This is a new product.", 100);
