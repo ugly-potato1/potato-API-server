@@ -8,7 +8,7 @@ VALUES ('test@test.com',
         '1234567890',
         'USER',
         'local',
-        'kakao_test',
+        'kakao_test2',
         'https://example.com/profile_image.jpg');
 
 
@@ -16,9 +16,9 @@ INSERT INTO post (title, user_id, content)
 VALUES ('포스트 제목', 1, '포스트 내용');
 
 INSERT INTO comment (post_id, user_id, parent_comment_id, content, created_date)
-VALUES (1, 1, null, '코멘트 내용', NOW()),
-       (1, 1, null, '코멘트 내용', NOW()),
-       (1, 1, null, '코멘트 내용', NOW());
+VALUES (1, 1, null, '코멘트 내용', CURRENT_TIMESTAMP),
+       (1, 1, null, '코멘트 내용', CURRENT_TIMESTAMP),
+       (1, 1, null, '코멘트 내용', CURRENT_TIMESTAMP);
 
 
 -- 대댓글 생성을 위한 MySQL insert 쿼리

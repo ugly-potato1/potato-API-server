@@ -9,8 +9,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 import potato.server.common.WithMockCustomMember;
 import potato.server.community.dto.request.CommentRequest;
+import potato.server.community.service.CommentReadService;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -18,6 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Transactional
 @AutoConfigureMockMvc
 @SpringBootTest
 @ActiveProfiles("test")
@@ -27,6 +30,9 @@ class CommentControllerTest {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Autowired
+    private CommentReadService commentReadService;
 
     @Test
     @WithMockCustomMember
@@ -64,10 +70,9 @@ class CommentControllerTest {
     @DisplayName("게시글 id로 댓글을 조회한다.")
     void givenPostId_whenSearchingComments_thenReturnCommentPageResponse() throws Exception {
         //given
-        Long postId = 1L;
 
         //when & then
-        mockMvc.perform(get("/api/v1/posts/1/comments"))
+        mockMvc.perform(get("/api/v1/posts/2/comments"))
                 .andExpect(status().isOk())
                 .andDo(print());
     }
