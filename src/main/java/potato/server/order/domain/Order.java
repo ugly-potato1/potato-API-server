@@ -28,11 +28,19 @@ public class Order extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    private Payment payment;
+
     private BigDecimal orderPrice;
 
     @Builder
-    public Order(User user, BigDecimal orderPrice) {
+    public Order(User user, Payment payment, BigDecimal orderPrice) {
         this.user = user;
+        this.payment = payment;
         this.orderPrice = orderPrice;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 }

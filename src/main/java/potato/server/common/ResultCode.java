@@ -59,9 +59,13 @@ public enum ResultCode {
     // P12xx 댓글 예외
     COMMENT_NOT_FOUNT("P1200", "존재하지 않는 댓글입니다."),
     PARENT_COMMENT_POST_MISS_MATCH("P1201", "부모 댓글의 게시글과 댓글을 작성할 게시글이 다릅니다.")
-
+      
+    //P11xx 결제 예외
+    IMP_PREVALIDATION_FAIL("P1200", "결제정보 사전등록에 실패하였습니다(이미 등록된 merchant_uid입니다)."),
+    IMP_NOT_VALIDAION("P1201", "잘못된 API키,secret키입니다."),
+    IMP_NOT_ACCESSTOKEN("P1202", "유효하지 않은 아임포트 엑세스토큰입니다."),
+    IMP_NOT_AMOUNT("P1203", "결제예상액과 결제금액이 다릅니다.")
     ;
-
 
     private final String code;
     private final String message;
