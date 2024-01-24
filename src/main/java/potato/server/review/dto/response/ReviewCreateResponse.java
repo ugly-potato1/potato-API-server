@@ -9,6 +9,6 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
-public class ReviewResponse {
+public class ReviewCreateResponse {
     private long reviewId;
 }
