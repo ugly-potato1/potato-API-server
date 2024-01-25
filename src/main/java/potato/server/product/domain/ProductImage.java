@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import potato.server.common.BaseTimeEntity;
 
 /**
@@ -33,5 +32,9 @@ public class ProductImage extends BaseTimeEntity {
     public ProductImage(Product product, String link) {
         this.product = product;
         this.link = link;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 }

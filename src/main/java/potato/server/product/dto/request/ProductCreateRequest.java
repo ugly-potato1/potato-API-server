@@ -2,16 +2,19 @@ package potato.server.product.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author: 박건휘
  * @since: 2023-11-13
  */
 @Getter
-@AllArgsConstructor
+@NoArgsConstructor
 public class ProductCreateRequest {
 
     @NotBlank
@@ -25,4 +28,5 @@ public class ProductCreateRequest {
 
     @NotNull
     private Integer stock;
+    private List<Long> productImageIds = new ArrayList<>();
 }

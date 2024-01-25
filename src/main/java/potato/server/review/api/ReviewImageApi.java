@@ -15,7 +15,7 @@ import potato.server.review.service.ReiewImageService;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/review/image")
-public class ReviewImageUpdateApi {
+public class ReviewImageApi {
 
     private final ReiewImageService reiewImageService;
 

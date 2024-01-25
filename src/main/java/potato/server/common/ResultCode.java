@@ -36,6 +36,7 @@ public enum ResultCode {
 
     // P6xx 상품예외
     PRODUCT_NOT_FOUND("P600", "존재하지 않은 상품입니다."),
+    PRODUCT_IMAGE_NOT_FOUND("P601", "존재하지 않는 상품이미지입니다."),
 
     // P7xx 리뷰예외
     REVIEW_NOT_FOUND("P700", "존재하지 않는 리뷰입니다."),
