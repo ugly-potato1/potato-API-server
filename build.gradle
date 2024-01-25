@@ -67,6 +67,9 @@ dependencies {
 	//redis가 포함된 테스트를 위함
 	testImplementation 'it.ozimov:embedded-redis:0.7.2'
 
+	//스웨거
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+
 	// mac m1 error solve
 	if (osdetector.classifier == "osx-aarch_64") {
 		runtimeOnly("io.netty:netty-resolver-dns-native-macos:4.1.77.Final:${osdetector.classifier}")
