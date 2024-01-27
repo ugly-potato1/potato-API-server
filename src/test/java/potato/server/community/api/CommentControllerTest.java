@@ -68,6 +68,7 @@ class CommentControllerTest {
 
     @Test
     @DisplayName("게시글 id로 댓글을 조회한다.")
+    @WithMockCustomMember
     void givenPostId_whenSearchingComments_thenReturnCommentPageResponse() throws Exception {
         //given
 
