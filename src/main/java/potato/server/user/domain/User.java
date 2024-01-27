@@ -46,7 +46,7 @@ public class User extends BaseTimeEntity {
 	private String phoneNumber;
 
 	@Enumerated(EnumType.STRING)
-	private Authority authority = Authority.USER;
+	private Authority authority;
 
 	@NotNull
 	private String providerName;
@@ -57,7 +57,7 @@ public class User extends BaseTimeEntity {
 	private String profileImage;
 	
 	@Builder
-	public User(String email, String name, LocalDate birth, Gender gender, JoinType joinType, String phoneNumber, String providerName, String providerId, String profileImage) {
+	public User(String email, String name, LocalDate birth, Gender gender, JoinType joinType, String phoneNumber, String providerName, String providerId, String profileImage, Authority authority) {
 		this.email = email;
 		this.name = name;
 		this.birth = birth;
@@ -67,6 +67,7 @@ public class User extends BaseTimeEntity {
 		this.providerName = providerName;
 		this.providerId = providerId;
 		this.profileImage = profileImage;
+		this.authority = authority;
 	}
 
 	public void updateProfileImage(String profileImage) {

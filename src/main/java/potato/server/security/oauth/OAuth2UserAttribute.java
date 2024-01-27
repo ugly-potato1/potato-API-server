@@ -31,6 +31,6 @@ public abstract class OAuth2UserAttribute {
 
     public abstract User toEntity();
 
-    public abstract void setUserAttributesByOauthToken(String oauth2AccessToken);
+    public abstract void setUserAttributesByOauthToken(String authorizionRequestHeader);
 
 }

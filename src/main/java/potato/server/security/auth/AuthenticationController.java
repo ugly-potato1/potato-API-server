@@ -1,11 +1,13 @@
 package potato.server.security.auth;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import potato.server.common.ResponseForm;
 import potato.server.security.auth.dto.AuthenticationResponse;
 import potato.server.security.auth.dto.RegisterRequest;
 import potato.server.security.oauth.AuthorizionRequestHeader;
@@ -22,31 +24,28 @@ import potato.server.security.oauth.AuthorizionRequestHeader;
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
-    //테스트용
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@Valid @RequestBody RegisterRequest registerRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) AuthorizionRequestHeader authorizionRequestHeader) {
-        AuthenticationResponse authenticationResponse = authenticationService.register(registerRequest, authorizionRequestHeader);
+    public ResponseEntity<AuthenticationResponse> register(@Valid @RequestBody RegisterRequest registerRequest, HttpServletRequest oauth2TokenWithBearer) {
+        AuthenticationResponse authenticationResponse = authenticationService.register(registerRequest, oauth2TokenWithBearer);
         return new ResponseEntity<>(authenticationResponse, HttpStatus.OK);
     }
 
     @PostMapping("/login/{providerName}")
-    public ResponseEntity<AuthenticationResponse> login(@PathVariable String providerName, @RequestHeader(HttpHeaders.AUTHORIZATION) AuthorizionRequestHeader authorizionRequestHeader) {
-        AuthenticationResponse authenticationResponse = authenticationService.login(providerName, authorizionRequestHeader);
+    public ResponseEntity<AuthenticationResponse> loginByOauth2Provider(@PathVariable String providerName, HttpServletRequest oauth2TokenWithBearer) {
+        AuthenticationResponse authenticationResponse = authenticationService.loginByOauth2Provider(providerName, oauth2TokenWithBearer);
         return new ResponseEntity<>(authenticationResponse, HttpStatus.OK);
     }
 
-//TODO
-//    @PostMapping("/withdraw")
-//    public void removeMember(@PathVariable String id) {
-//        Optional<Member> member = memberRepository.findById(id);
-//        memberRepository.deleteById(id);
-//        authenticationService.deleteRedisToken(email);
-//    }
+    @PostMapping("/login/accesstoken")
+    public ResponseForm loginByAccessToken(HttpServletRequest accessTokenWithBearer) {
+        authenticationService.loginByAccessToken(accessTokenWithBearer);
+        return new ResponseForm<>();
+    }
 
     @PostMapping("/renew")
-    public ResponseEntity<AuthenticationResponse> newTokenByRefreshToken(@RequestHeader(HttpHeaders.AUTHORIZATION) String refreshToken) {
-        AuthenticationResponse authenticationResponse = authenticationService.newTokenByRefreshToken(refreshToken);
+    public ResponseEntity<AuthenticationResponse> newTokenByRefreshToken(HttpServletRequest refreshTokenWithBearer) {
+        AuthenticationResponse authenticationResponse = authenticationService.newTokenByRefreshToken(refreshTokenWithBearer);
         return new ResponseEntity<>(authenticationResponse, HttpStatus.OK);
     }
 }
