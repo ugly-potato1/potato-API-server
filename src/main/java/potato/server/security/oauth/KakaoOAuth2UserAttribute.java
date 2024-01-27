@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import net.minidev.json.JSONObject;
 import org.springframework.web.reactive.function.client.WebClient;
 import potato.server.user.domain.User;
+import potato.server.user.spec.Authority;
 import potato.server.user.spec.Gender;
 
 import java.time.LocalDate;
@@ -33,18 +34,18 @@ public class KakaoOAuth2UserAttribute extends OAuth2UserAttribute {
     public User toEntity() {
         return User.builder()
                 .providerName(KAKAO_PROVIDER_ID)
-                .providerId(KAKAO_PROVIDER_ID + " " + getProviderId())//띄어쓰기 포함
+                .providerId(getProviderId())
                 .email(getEmail())
                 .name(getName())
                 .gender(Gender.valueOf(getGender().toUpperCase())) //대소문자 구별하니 바꿔줘야 함
+                .authority(Authority.USER)
                 .birth(LocalDate.parse(getBirthday()))
                 .build();
     }
 
-    //TODO
     @Override
     public String getProviderId() {
-        return KAKAO_PROVIDER_ID + " " + this.id;
+        return KAKAO_PROVIDER_ID + "_" + this.id;
     }
 
     @Override
