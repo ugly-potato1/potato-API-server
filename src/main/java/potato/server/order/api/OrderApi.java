@@ -1,7 +1,6 @@
 package potato.server.order.api;
 
 import jakarta.validation.Valid;
-import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -52,10 +51,10 @@ public class OrderApi {
         );
     }
 
-    @DeleteMapping("/order-id")
+    @DeleteMapping("/{order-id}")
     public ResponseForm<Void> deleteOrder(
             @AuthenticationPrincipal AuthorityUserDTO userDTO,
-            @PathParam("order-id") Long orderId
+            @PathVariable("order-id") Long orderId
     ) {
         orderWriteService.deleteOrder(userDTO.getId(), orderId);
         return new ResponseForm<>();
