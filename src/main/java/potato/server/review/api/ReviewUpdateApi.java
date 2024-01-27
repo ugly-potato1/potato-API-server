@@ -6,7 +6,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import potato.server.common.ResponseForm;
 import potato.server.review.dto.request.ReviewCreateRequest;
-import potato.server.review.dto.response.ReviewResponse;
+import potato.server.review.dto.response.ReviewCreateResponse;
 import potato.server.review.service.ReviewService;
 import potato.server.security.auth.dto.AuthorityUserDTO;
 
@@ -24,7 +24,7 @@ public class ReviewUpdateApi {
 
 
     @PostMapping
-    public ResponseForm<ReviewResponse> createReview(@AuthenticationPrincipal AuthorityUserDTO userDTO, @RequestBody ReviewCreateRequest request) {
+    public ResponseForm<ReviewCreateResponse> createReview(@AuthenticationPrincipal AuthorityUserDTO userDTO, @RequestBody ReviewCreateRequest request) {
         return new ResponseForm<>(reviewService.createReview(request, userDTO.getId()));
     }
 
