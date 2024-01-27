@@ -17,7 +17,7 @@ import potato.server.review.service.ReiewImageService;
 @RequiredArgsConstructor
 @RequestMapping("api/v1/review/image")
 @PreAuthorize("isAuthenticated()")
-public class ReviewImageUpdateApi {
+public class ReviewImageApi {
 
     private final ReiewImageService reiewImageService;
 
