@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import potato.server.common.WithMockCustomMember;
 import potato.server.mail.dto.SendMailRequest;
@@ -21,8 +22,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author 정순원
  * @since 2024-01-16
  */
+
 @SpringBootTest
 @AutoConfigureMockMvc
+@ActiveProfiles("test")
 class MailApiTest {
 
     @Autowired
