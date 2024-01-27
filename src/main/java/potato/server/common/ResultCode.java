@@ -59,7 +59,7 @@ public enum ResultCode {
 
     // P12xx 댓글 예외
     COMMENT_NOT_FOUNT("P1200", "존재하지 않는 댓글입니다."),
-    PARENT_COMMENT_POST_MISS_MATCH("P1201", "부모 댓글의 게시글과 댓글을 작성할 게시글이 다릅니다.")
+    PARENT_COMMENT_POST_MISS_MATCH("P1201", "부모 댓글의 게시글과 댓글을 작성할 게시글이 다릅니다."),
       
     //P11xx 결제 예외
     IMP_PREVALIDATION_FAIL("P1200", "결제정보 사전등록에 실패하였습니다(이미 등록된 merchant_uid입니다)."),
