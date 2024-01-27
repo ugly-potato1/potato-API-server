@@ -43,7 +43,6 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/auth/**").permitAll() //해당 리소스에 대한 모든 요청 허가
                         .requestMatchers("/products").permitAll()
                         .requestMatchers("/swagger-ui").permitAll()
-
                         .requestMatchers("/").permitAll()
 
                         .anyRequest().authenticated())
