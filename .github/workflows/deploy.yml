@@ -30,7 +30,10 @@ jobs:
         with:
           files: src/main/resources/application.yml
         env:
-          jwt.secretkey: ${{ secrets.SECRETKEY }} 
+          spring.datasource.url: ${{ secrets.RDS_ENDPOINT }}
+          spring.datasource.username: ${{ secrets.RDS_USERNAME }}
+          spring.datasource.password: ${{ secrets.RDS_PASSWORD }}
+          jwt.secretkey: ${{ secrets.SECRETKEY }}
           cloud.aws.credentials.access-key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           cloud.aws.credentials.secret-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           imp.secret-key: ${{ secrets.API_SECRET_KEY }}
