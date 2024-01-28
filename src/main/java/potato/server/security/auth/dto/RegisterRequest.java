@@ -3,13 +3,14 @@ package potato.server.security.auth.dto;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * @Author 정순원
  * @Since 2023-08-23
  */
 @Getter
-@Builder
+@NoArgsConstructor
 public class RegisterRequest {
 
     @NotBlank
