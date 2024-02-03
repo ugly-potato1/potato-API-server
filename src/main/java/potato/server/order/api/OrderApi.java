@@ -19,7 +19,7 @@ import potato.server.security.auth.dto.AuthorityUserDTO;
  */
 @RestController
 @AllArgsConstructor
-@RequestMapping("api/v1/orders/")
+@RequestMapping("api/v1/orders")
 public class OrderApi {
 
     private final OrderWriteService orderWriteService;
