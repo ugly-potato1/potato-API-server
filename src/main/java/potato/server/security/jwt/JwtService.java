@@ -10,12 +10,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import potato.server.common.CustomException;
+import potato.server.common.ResultCode;
 import potato.server.security.auth.dto.AuthorityUserDTO;
 import potato.server.security.auth.dto.ClaimsDTO;
 import potato.server.user.repository.UserRepository;
@@ -35,16 +38,14 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class JwtService {
 
+    private static final String HEADER_PREFIX = "Bearer ";
+    private final UserRepository userRepository;
     @Value("${jwt.secretkey}")
     private String secretKey;
     @Value("${jwt.accessTokenExpiration}")
     private Long accessTokenExpiration;
     @Value("${jwt.refreshTokenExpiration}")
     private Long refreshTokenExpiration;
-
-    private final UserRepository userRepository;
-    private static final String HEADER_PREFIX = "Bearer ";
-
 
     //토큰 생성 메소드들
     //클레임으로 변환 후
@@ -102,39 +103,41 @@ public class JwtService {
                 .getBody();
     }
 
-    //토큰 검증 메소드
-    //TODO
     public boolean isTokenValid(String token) {
         String providerId = parseProviderId(token);
         Date expiration = parseExpiration(token);
-        if (userRepository.existsByProviderId(providerId) && expiration.after(new Date()))
-            return true;
-        return false;
+        if (expiration.before(new Date())) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, ResultCode.JWT_DATE_NOT);
+        }
+        if (!userRepository.existsByProviderId(providerId)) {
+            throw new CustomException(HttpStatus.NOT_FOUND, ResultCode.USER_NOT_FOUND);
+        }
+        return true;
     }
 
 
-        //request 헤더에서 토큰 추출
-        public String parseTokenFrom (HttpServletRequest request){
-            String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-            if (StringUtils.hasText(authorizationHeader) && authorizationHeader.startsWith(HEADER_PREFIX))
-                return authorizationHeader.replace(HEADER_PREFIX, "");
-            return null;
-        }
-
-        public Authentication getAuthentication (String accessToken){
-
-            Claims claims = parseAllClaims(accessToken);
-            String providerId = claims.getSubject();
-            Long id = Long.parseLong((claims.get("id")).toString());
-            String email = claims.get("email").toString();
-            String authority = claims.get("authority").toString();
-            AuthorityUserDTO authorityMemberDTO = AuthorityUserDTO.builder()
-                    .id(id)
-                    .providerId(providerId)
-                    .email(email)
-                    .authority(authority)
-                    .build();
-            Collection<? extends GrantedAuthority> authorities = Set.of(new SimpleGrantedAuthority(authority));
-            return new UsernamePasswordAuthenticationToken(authorityMemberDTO, "", authorities);
-        }
+    //request 헤더에서 토큰 추출
+    public String parseTokenFrom(HttpServletRequest request) {
+        String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        if (StringUtils.hasText(authorizationHeader) && authorizationHeader.startsWith(HEADER_PREFIX))
+            return authorizationHeader.replace(HEADER_PREFIX, "");
+        return null;
     }
+
+    public Authentication getAuthentication(String accessToken) {
+
+        Claims claims = parseAllClaims(accessToken);
+        String providerId = claims.getSubject();
+        Long id = Long.parseLong((claims.get("id")).toString());
+        String email = claims.get("email").toString();
+        String authority = claims.get("authority").toString();
+        AuthorityUserDTO authorityMemberDTO = AuthorityUserDTO.builder()
+                .id(id)
+                .providerId(providerId)
+                .email(email)
+                .authority(authority)
+                .build();
+        Collection<? extends GrantedAuthority> authorities = Set.of(new SimpleGrantedAuthority(authority));
+        return new UsernamePasswordAuthenticationToken(authorityMemberDTO, "", authorities);
+    }
+}
