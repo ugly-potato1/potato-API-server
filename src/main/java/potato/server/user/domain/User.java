@@ -10,8 +10,6 @@ import potato.server.user.spec.Authority;
 import potato.server.user.spec.Gender;
 import potato.server.user.spec.JoinType;
 
-import java.time.LocalDate;
-
 /**
  * @author 정순원
  * @since 2023-09-18
@@ -32,7 +30,7 @@ public class User extends BaseTimeEntity {
 	@Column(length = 10, nullable = false)
 	private String name;
 	
-	private LocalDate birth;
+	private String birth;
 	
 	@Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -57,7 +55,7 @@ public class User extends BaseTimeEntity {
 	private String profileImage;
 	
 	@Builder
-	public User(String email, String name, LocalDate birth, Gender gender, JoinType joinType, String phoneNumber, String providerName, String providerId, String profileImage, Authority authority) {
+	public User(String email, String name, String birth, Gender gender, JoinType joinType, String phoneNumber, String providerName, String providerId, String profileImage, Authority authority) {
 		this.email = email;
 		this.name = name;
 		this.birth = birth;

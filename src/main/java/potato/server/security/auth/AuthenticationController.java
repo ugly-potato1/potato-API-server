@@ -3,14 +3,12 @@ package potato.server.security.auth;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import potato.server.common.ResponseForm;
 import potato.server.security.auth.dto.AuthenticationResponse;
 import potato.server.security.auth.dto.RegisterRequest;
-import potato.server.security.oauth.AuthorizionRequestHeader;
 
 /**
  * 로그인, 회원가입, 토큰 재발급에 관한 API
