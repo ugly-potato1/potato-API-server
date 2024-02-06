@@ -10,12 +10,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import potato.server.common.CustomException;
+import potato.server.common.ResultCode;
 import potato.server.security.auth.dto.AuthorityUserDTO;
 import potato.server.security.auth.dto.ClaimsDTO;
 import potato.server.user.repository.UserRepository;
@@ -102,14 +105,17 @@ public class JwtService {
                 .getBody();
     }
 
-    //토큰 검증 메소드
-    //TODO
+
     public boolean isTokenValid(String token) {
         String providerId = parseProviderId(token);
         Date expiration = parseExpiration(token);
-        if (userRepository.existsByProviderId(providerId) && expiration.after(new Date()))
-            return true;
-        return false;
+        if (expiration.before(new Date())) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, ResultCode.JWT_DATE_NOT);
+        }
+        if (!userRepository.existsByProviderId(providerId)) {
+            throw new CustomException(HttpStatus.NOT_FOUND, ResultCode.USER_NOT_FOUND);
+        }
+        return true;
     }
 
 

@@ -9,8 +9,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 import potato.server.user.domain.User;
 import potato.server.user.spec.Authority;
 import potato.server.user.spec.Gender;
+import potato.server.user.spec.JoinType;
 
-import java.time.LocalDate;
 import java.util.Map;
 
 /**
@@ -37,7 +37,8 @@ public class NaverOAuth2UserAttribute extends OAuth2UserAttribute {
                 .name(getName())
                 .gender(Gender.valueOf(getGender().toUpperCase())) //대소문자 구별하니 바꿔줘야 함
                 .authority(Authority.USER)
-                .birth(LocalDate.parse(getBirthday()))
+                .birthYear(getBirthday())
+                .joinType(JoinType.NAVER)
                 .build();
     }
 
