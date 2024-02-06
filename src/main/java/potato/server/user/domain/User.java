@@ -40,7 +40,7 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false)
 	private JoinType joinType;
 	
-	@Column(length = 13, nullable = false)
+	@Column(length = 13)
 	private String phoneNumber;
 
 	@Enumerated(EnumType.STRING)
