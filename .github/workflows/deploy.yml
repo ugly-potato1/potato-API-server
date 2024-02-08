@@ -33,6 +33,8 @@ jobs:
           spring.datasource.url: ${{ secrets.RDS_ENDPOINT }}
           spring.datasource.username: ${{ secrets.RDS_USERNAME }}
           spring.datasource.password: ${{ secrets.RDS_PASSWORD }}
+          spring.data.redis.host: ${{ secrets.REDIS_ENDPOINT }}
+          logging.slack.webhook-uri: ${{ SLACK_URL}}
           jwt.secretkey: ${{ secrets.SECRETKEY }}
           cloud.aws.credentials.access-key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           cloud.aws.credentials.secret-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
