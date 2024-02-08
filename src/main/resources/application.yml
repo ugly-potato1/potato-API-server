@@ -19,7 +19,7 @@ spring:
 
 logging:
   slack:
-    webhook-uri: http://localhost:8080/log-callback
+    webhook-uri: ${SLACK_URL}
   config: classpath:logback-spring.xml
 
 jwt:
