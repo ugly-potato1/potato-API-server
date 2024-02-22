@@ -21,15 +21,17 @@ public class ProductResponse {
     private String description;
     private Integer hit;
     private Integer stock;
+    private String townName;
     private Integer version;
 
     @QueryProjection
-    public ProductResponse(String title, BigDecimal price, String description, Integer stock, Integer version, Integer hit) {
+    public ProductResponse(String title, BigDecimal price, String description, Integer stock, Integer version, String townName, Integer hit) {
         this.title = title;
         this.price = price;
         this.description = description;
         this.stock = stock;
         this.version = version;
+        this.townName = townName;
         this.hit = hit;
     }
 
@@ -51,6 +53,7 @@ public class ProductResponse {
                 product.getDescription(),
                 product.getStock(),
                 product.getVersion(),
+                product.getTown().getName(),
                 product.getHit());
     }
 }

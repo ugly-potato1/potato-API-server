@@ -1,5 +1,6 @@
 package potato.server.product.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,8 @@ import potato.server.product.dto.request.ProductUpdateRequest;
 import potato.server.product.dto.response.ProductResponse;
 import potato.server.product.repository.ProductImageRepository;
 import potato.server.product.repository.ProductRepository;
+import potato.server.town.domain.Town;
+import potato.server.town.repository.TownRepository;
 
 import java.util.List;
 
@@ -28,14 +31,19 @@ import java.util.List;
 public class ProductService {
     private final ProductRepository productRepository;
     private final ProductImageRepository productImageRepository;
+    private final TownRepository townRepository;
 
     @Transactional
     public void createProduct(ProductCreateRequest request) {
+        Town town = townRepository.findByName(request.getTownName())
+                .orElseThrow(() -> new EntityNotFoundException("마을 정보가 없습니다"));
+
         Product product = Product.builder()
                 .price(request.getPrice())
                 .title(request.getTitle())
                 .description(request.getDescription())
                 .stock(request.getStock())
+                .town(town)
                 .build();
         productRepository.save(product);
 
