@@ -28,5 +28,9 @@ public class ProductCreateRequest {
 
     @NotNull
     private Integer stock;
+
+    @NotNull
+    private String townName;
+
     private List<Long> productImageIds = new ArrayList<>();
 }
