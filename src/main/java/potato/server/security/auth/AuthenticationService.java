@@ -37,18 +37,22 @@ public class AuthenticationService {
     private long refreshTokenExpiration;
 
     /**
-     * 회원가입
+     * 회원가입/로그인
      * member 저장, 수신동의 저장, 엑세스,리프레쉬토큰 생성, redis에 리프레쉬 토큰 저장
      */
     @Transactional
     public AuthenticationResponse register(RegisterRequest request, HttpServletRequest oauth2TokenWithBearer) {
+        User user;
         //카카오인지 네이버인지 선택
         OAuth2UserAttribute oAuth2UserAttribute = OAuth2UserAttributeFactory.of(request.getProviderName());
         String oauth2AccessToken = jwtService.parseTokenFrom(oauth2TokenWithBearer);
         //정보 추출
         oAuth2UserAttribute.setUserAttributesByOauthToken(oauth2AccessToken);
-        checkRegistration(oAuth2UserAttribute.getProviderId());
-        User user = saveInformation(request, oAuth2UserAttribute);
+        if (userRepository.existsByProviderId(oAuth2UserAttribute.getProviderId()))
+            user = userRepository.findByProviderId(oAuth2UserAttribute.getProviderId()).orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, ResultCode.USER_NOT_FOUND));
+        else
+            user = saveInformation(request, oAuth2UserAttribute);
+
         return generateToken(user);
     }
 
@@ -114,10 +118,10 @@ public class AuthenticationService {
     /**
      * 회원가입 되어있는지 확인
      */
-    private void checkRegistration(String providerId) {
-        if (userRepository.existsByProviderId(providerId))
-            throw new CustomException(HttpStatus.BAD_REQUEST, ResultCode.USER_ALREADY_JOIN);
-    }
+//    private void checkRegistration(String providerId) {
+//        if (userRepository.existsByProviderId(providerId))
+//            throw new CustomException(HttpStatus.BAD_REQUEST, ResultCode.USER_ALREADY_JOIN);
+//    }
 
     /**
      * 유저 정보, 정책 동의 정보 저장
