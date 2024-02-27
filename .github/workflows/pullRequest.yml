@@ -1,8 +1,8 @@
 # 실행 시기
 on:
-  push:
+  pull_request:
     branches: develop
-    
+
 # 작업 내용
 jobs:
   build:
@@ -22,8 +22,8 @@ jobs:
         with:
           java-version: 17
           distribution: 'temurin'
-          
-      - name: Set application.yml  
+
+      - name: Set application.yml
         uses: microsoft/variable-substitution@v1
         with:
           files: src/main/resources/application.yml
@@ -38,8 +38,8 @@ jobs:
           cloud.aws.credentials.secret-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           imp.api-secret-key: ${{ secrets.API_SECRET_KEY }}
           imp.api-key: ${{ secrets.API_KEY }}
-        
-    
+
+
       ## gradle caching/빌드 시간 단축
       - name: Gradle Caching
         uses: actions/cache@v3
@@ -58,33 +58,3 @@ jobs:
       - name: Build Gradle
         run: ./gradlew build
         shell: bash
-
-      # 배포에 필요한 여러 설정 파일과 프로젝트 빌드파일을 zip 파일로 모아줍니다.
-      - name: zip file 생성
-        run: |
-          mkdir deploy
-          cp ./docker/docker-compose.blue.yml ./deploy/
-          cp ./docker/docker-compose.green.yml ./deploy/
-          cp ./appspec.yml ./deploy/
-          cp ./docker/Dockerfile ./deploy/
-          cp ./scripts/deploy.sh ./deploy/
-          cp ./build/libs/potato-API-server-0.0.1-SNAPSHOT.jar ./deploy/
-          zip -r -qq -j ./$GITHUB_SHA.zip ./deploy
-
-      # AWS 연결
-      - name: AWS 연결
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
-
-      # S3에 프로젝트를 업로드
-      - name: S3에 프로젝트 업로드
-        run: |
-         aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://ugly-potato-bucket/$GITHUB_SHA.zip
-          
-      # CodeDelploy에 배포를 요청
-      - name: Code Deploy 배포 요청
-        run: aws deploy create-deployment --application-name potato --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name potato_deploy --s3-location bucket=ugly-potato-bucket,bundleType=zip,key=$GITHUB_SHA.zip
-
